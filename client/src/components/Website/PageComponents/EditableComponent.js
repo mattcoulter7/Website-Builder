@@ -32,12 +32,13 @@ export default class blah extends React.Component {
                 <CustomComponent component={this.props.component}>
                     {(() => {
                         if (this.state.showOptions){
-                            return <div style={{
-                                position:'relative',
-                                zIndex:9999
-                            }}>
-                                options
-                            </div>
+                            return (
+                                <div class="row shadow-sm p-3 mb-5 bg-white rounded">
+                                    <div>
+                                        
+                                    </div>
+                                </div>
+                            )
                         }
                     })()}
                 </CustomComponent>
