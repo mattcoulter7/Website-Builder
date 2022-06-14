@@ -33,6 +33,7 @@ export default (props) => {
                     <Card title={page.name} description="">
                         <a href={`/page/edit/${page._id}`} className="btn btn-primary">Edit Page</a>
                         <a href={`/page/view/${page._id}`} className="btn btn-secondary">View Page</a>
+                        <button onClick={() => PageDAO.delete(page._id).then(() => window.location.reload())} className="btn btn-danger">Delete Page</button>
                     </Card>
                 )}
                 <Card title="New Page" description="Create a new page">

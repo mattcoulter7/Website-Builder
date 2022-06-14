@@ -28,11 +28,12 @@ export default (props) => {
     return (
         <Main>
             <h1>My Websites</h1>
-            <Grid colCount={2} websiteId={_id}>
+            <Grid colCount={4} websiteId={_id}>
                 {websites.map(website => 
                     <Card title={website.companyName} description="">
                         <a href={`/website/edit/${website._id}`} className="btn btn-primary">Edit Website</a>
                         <a href={`/website/view/${website._id}`} className="btn btn-secondary">View Website</a>
+                        <button onClick={() => WebsiteDAO.delete(website._id).then(() => window.location.reload())} className="btn btn-danger">Delete Website</button>
                     </Card>
                 )}
                 <Card title="New Website" description="Create a new website">

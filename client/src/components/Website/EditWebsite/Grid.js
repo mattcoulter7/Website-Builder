@@ -12,7 +12,7 @@ export default class blah extends React.Component {
         let grid = this.props.children.flat().reduce((prev,curr,i) => {
             let rowIndex = Math.floor(i/this.props.colCount)
             let colIndex = i % this.props.colCount;
-            prev[rowIndex] = prev[rowIndex] || [];
+            prev[rowIndex] = prev[rowIndex] || new Array(this.props.colCount).fill(null);
             prev[rowIndex][colIndex] = curr;
             return prev;
         },[]);
