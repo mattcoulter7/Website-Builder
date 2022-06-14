@@ -5,6 +5,16 @@ const componentSchema = new mongoose.Schema({
     pageId: {
         type: ObjectId,
         required: true
+    },
+    type:{
+        type: String,
+        required: true
+    },
+    title:{
+        type: String
+    },
+    body:{
+        type: String
     }
 })
 
