@@ -1,10 +1,10 @@
 import React from "react";
-import './Component.css';
 
 import * as ComponentMapping from "./ComponentMapping";
 
 import ComponentDAO from "../../../DAOs/ComponentDAO";
 import OptionsMenu from "./OptionsMenu";
+import LayoutsMenu from "./LayoutsMenu"
 
 import CustomFocusser from "./CustomFocusser";
 
@@ -42,7 +42,7 @@ export default class EditableComponent extends React.Component {
                         <CustomComponent component={this.props.component} />
                     </div>
                     <div className="col-1">
-                        <OptionsMenu className={this.state.focus ? "visible-fade" : "invisible-fade"} component={this.props.component} />
+                        <LayoutsMenu className={this.state.focus ? "visible-fade" : "invisible-fade"} component={this.props.component} />
                     </div>
                 </div>
             </CustomFocusser>

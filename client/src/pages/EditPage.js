@@ -11,6 +11,8 @@ import EditableComponent from "../components/Website/PageComponents/EditableComp
 import NewLine from "../components/Website/PageComponents/NewLine"
 import CustomFocusser from "../components/Website/PageComponents/CustomFocusser"
 
+import TitleBody1 from "../components/Website/PageComponents/TitleBody1"
+
 export default () => {
     var {_id} = useParams();
     
@@ -31,13 +33,9 @@ export default () => {
     const onNewComponent = () => {
         ComponentDAO
             .insert(new ComponentDTO({
-                pageId:_id,
-                type: "TitleBody1",
-                title: "<h1>Example Title</h1>",
-                body: `<p>Example Body</p>`
+                ...TitleBody1._DefaultComponentValues(),
+                pageId:_id
             }))
-            .then(() => {
-            })
     }
 
     return (

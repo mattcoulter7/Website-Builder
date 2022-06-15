@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class TitleBody1 extends React.Component {
+export default class TitleBody2 extends React.Component {
     render() {
         return (
             <div className="container">
@@ -8,6 +8,8 @@ export default class TitleBody1 extends React.Component {
                     <div className="col">
                         <div dangerouslySetInnerHTML={{ __html: this.props.component.title }}></div>
                     </div>
+                </div>
+                <div className="row">
                     <div className="col">
                         <div dangerouslySetInnerHTML={{ __html: this.props.component.body }}></div>
                     </div>
@@ -18,7 +20,7 @@ export default class TitleBody1 extends React.Component {
 
     static _DefaultComponentValues() {
         return {
-            type: "TitleBody1",
+            type: "TitleBody2",
             title: "<h1>Example Title</h1>",
             body: `<p>Example Body</p>`
         };

@@ -1,9 +1,6 @@
 import React from "react";
-import './Component.css';
 
 import * as ComponentMapping from "./ComponentMapping";
-
-
 
 export default class PreviewComponent extends React.Component {
     constructor(props) {
