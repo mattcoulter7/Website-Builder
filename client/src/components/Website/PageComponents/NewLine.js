@@ -1,30 +1,24 @@
 import React from "react";
 
+import {BsFillPlusCircleFill} from 'react-icons/bs'
+
 export default class blah extends React.Component {
     render() {
         return (
             <div style={{
-                backgroundColor:"aqua",
-                height:"1px",
+                backgroundColor:"black",
+                height:"2px",
                 width:"100%",
                 display:"flex",
                 flexDirection:"column",
                 alignItems: 'center'
             }}>
-                <button style={{
-                    backgroundColor:"aqua",
-                    borderRadius:"25px",
-                    width:"25px",
-                    height:"25px",
-                    display:"flex",
-                    flexDirection:"column",
-                    alignItems: 'center',
-                    color:"white",
+                <button className="btn btn-primary"style={{
                     position:"relative",
-                    top:"-12.5px",
-                    border:"none"
+                    top:"-20px",
+                    zIndex:1000
                 }} onClick={() => this.props.onNew()}>
-                    +
+                    <BsFillPlusCircleFill/>
                 </button>
             </div>
         );
