@@ -15,6 +15,9 @@ const componentSchema = new mongoose.Schema({
     },
     body:{
         type: String
+    },
+    imageUrl:{
+        type: String
     }
 })
 

@@ -1,12 +1,12 @@
 //#region Base Request
-class Request {
+export class Request {
     constructor(path, options = {}) {
         this.options = options;
         this.path = path;
     }
 
     get url() {
-        return new URL(`query/${this.path.join("/")}`, "http://localhost:3001"); // ensure it is the database url
+        return new URL(`${this.path.join("/")}`, "http://localhost:3001"); // ensure it is the database url
     }
 
     execute() {
@@ -31,7 +31,7 @@ class Request {
 //#endregion
 
 //#region Type Requests
-class GetRequest extends Request {
+export class GetRequest extends Request {
     constructor(path) {
         super(path, {
             method: "GET"
@@ -39,29 +39,29 @@ class GetRequest extends Request {
     }
 }
 
-class PostRequest extends Request {
-    constructor(path, data) {
+export class PostRequest extends Request {
+    constructor(path, body, headers = {
+        'Content-Type': 'application/json'
+    }) {
         super(path, {
             method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
+            headers: headers,
+            body: body
         });
     }
 }
-class PutRequest extends Request {
-    constructor(path, data) {
+export class PutRequest extends Request {
+    constructor(path, body, headers = {
+        'Content-Type': 'application/json'
+    }) {
         super(path, {
             method: "PUT",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+            headers: headers,
+            body: body
         });
     }
 }
-class DeleteRequest extends Request {
+export class DeleteRequest extends Request {
     constructor(path) {
         super(path, {
             method: "DELETE"
@@ -74,31 +74,31 @@ class DeleteRequest extends Request {
 //#region CRUD Requests
 export class Select extends GetRequest {
     constructor(table) {
-        super([table]);
+        super(['query', table]);
     }
 }
 
 export class SelectId extends GetRequest {
     constructor(table, id) {
-        super([table, id]);
+        super(['query', table, id]);
     }
 }
 
 export class Update extends PutRequest {
     constructor(table, obj) {
-        super([table, obj._id], obj);
+        super(['query', table, obj._id], JSON.stringify(obj));
     }
 }
 
 export class Insert extends PostRequest {
     constructor(table, obj) {
-        super([table], obj);
+        super(['query', table], JSON.stringify(obj));
     }
 }
 
 export class Delete extends DeleteRequest {
     constructor(table, id) {
-        super([table, id]);
+        super(['query', table, id]);
     }
 }
 //#endregion

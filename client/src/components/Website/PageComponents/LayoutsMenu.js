@@ -17,10 +17,11 @@ const LayoutsMenu = ({
     }
 
     const changeType = (compType) => {
+        debugger
         let values = compType._DefaultComponentValues();
         ComponentDAO.update(new ComponentDTO({
             ...values,
-            ...component.toJSON(),
+            ...component.toFilteredJSON(),
             type:values.type
         }));
     }
