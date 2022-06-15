@@ -32,8 +32,8 @@ export default () => {
             .insert(new ComponentDTO({
                 pageId:_id,
                 type: "TitleBody1",
-                title: "New Components",
-                body: loremIpsum().join("")
+                title: "<h1>Example Title</h1>",
+                body: `<p>Example Body</p>`
             }))
             .then(() => {
                 window.location.reload();

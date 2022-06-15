@@ -6,11 +6,9 @@ export default class blah extends React.Component {
             <div className="container">
                 {this.props.children}
                 <div className="row">
-                    <div className="col">
-                        <h1>{this.props.component.title}</h1>
+                    <div className="col" dangerouslySetInnerHTML={{__html: this.props.component.title}}>
                     </div>
-                    <div className="col">
-                        <p>{this.props.component.body}</p>
+                    <div className="col" dangerouslySetInnerHTML={{__html: this.props.component.body}}>
                     </div>
                 </div>
             </div>

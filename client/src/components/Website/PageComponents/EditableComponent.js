@@ -1,15 +1,11 @@
 import React from "react";
+import './Component.css';
 
-import TitleBody1 from "./TitleBody1"
+import * as ComponentMapping from "./ComponentMapping";
 
-import NewLine from "./NewLine";
+import ComponentDAO from "../../../DAOs/ComponentDAO";
 
-const componentMapping = {
-    'TitleBody1': TitleBody1
-}
-
-
-export default class blah extends React.Component {
+export default class EditableComponent extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -19,24 +15,34 @@ export default class blah extends React.Component {
 
     toggleOptions(enabled) {
         this.setState({
-            showOptions:true
+            showOptions:enabled
         })
     }
 
     render() {
-        var CustomComponent = componentMapping[this.props.component.type];
+        var CustomComponent = ComponentMapping.Edit[this.props.component.type];
         if (!CustomComponent) return (<></>);
 
         return (
-            <div onMouseEnter={() => this.toggleOptions(true)} onMouseLeave={() => this.toggleOptions(false)}>
+            <div style={{
+                ...this.state.showOptions ? {
+                    border:"aqua 3px solid"
+                } : {}
+            }} onMouseEnter={() => this.toggleOptions(true)} onMouseLeave={() => this.toggleOptions(false)}>
                 <CustomComponent component={this.props.component}>
                     {(() => {
                         if (this.state.showOptions){
                             return (
                                 <div class="row shadow-sm p-3 mb-5 bg-white rounded">
-                                    <div>
-                                        
-                                    </div>
+                                    <button onClick={() => ComponentDAO.delete(this.props.component._id).then((result) => window.location.reload())}>
+                                        Delete
+                                    </button>
+                                    <button onClick={() => {}}>
+                                        Up
+                                    </button>
+                                    <button onClick={() => {}}>
+                                        Down
+                                    </button>
                                 </div>
                             )
                         }

@@ -1,14 +1,5 @@
 import React from "react";
 
-import TitleBody1 from "./TitleBody1"
-
-import NewLine from "./NewLine";
-
-const componentMapping = {
-    'TitleBody1': TitleBody1
-}
-
-
 export default class blah extends React.Component {
     toggleOptions(enabled) {
         this.setState({
