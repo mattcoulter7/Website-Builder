@@ -2,21 +2,17 @@ import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import React from 'react'
 
-import './TipTap.scss'
+import  { TypeItalic,TypeBold,TypeStrikethrough,Code,Paragraph,TypeH1,TypeH2,TypeH3 } from 'react-bootstrap-icons';
 
-const TipTapMenuBar = ({ bold,
+const TipTapMenuBar = ({ 
+    bold = true,
     italic = true,
     strike = true,
     code = true,
-    clearMarks = true,
-    clearNodes = true,
     paragraph = true,
     h1 = true,
     h2 = true,
     h3 = true,
-    h4 = true,
-    h5 = true,
-    h6 = true,
     bulletList = true,
     orderedList = true,
     blockQuote = true,
@@ -37,7 +33,7 @@ const TipTapMenuBar = ({ bold,
             onClick={() => editor.chain().focus().toggleBold().run()}
             className={editor.isActive('bold') ? 'is-active' : ''}
         >
-            bold
+            <TypeBold/>
         </button>
     )
     italic && buttons.push(
@@ -45,7 +41,7 @@ const TipTapMenuBar = ({ bold,
             onClick={() => editor.chain().focus().toggleItalic().run()}
             className={editor.isActive('italic') ? 'is-active' : ''}
         >
-            italic
+            <TypeItalic/>
         </button>
     );
     strike && buttons.push(
@@ -53,7 +49,7 @@ const TipTapMenuBar = ({ bold,
             onClick={() => editor.chain().focus().toggleStrike().run()}
             className={editor.isActive('strike') ? 'is-active' : ''}
         >
-            strike
+            <TypeStrikethrough/>
         </button>
     );
     code && buttons.push(
@@ -61,17 +57,7 @@ const TipTapMenuBar = ({ bold,
             onClick={() => editor.chain().focus().toggleCode().run()}
             className={editor.isActive('code') ? 'is-active' : ''}
         >
-            code
-        </button>
-    );
-    clearMarks && buttons.push(
-        <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>
-            clear marks
-        </button>
-    );
-    clearNodes && buttons.push(
-        <button onClick={() => editor.chain().focus().clearNodes().run()}>
-            clear nodes
+            <Code/>
         </button>
     );
     paragraph && buttons.push(
@@ -79,7 +65,7 @@ const TipTapMenuBar = ({ bold,
             onClick={() => editor.chain().focus().setParagraph().run()}
             className={editor.isActive('paragraph') ? 'is-active' : ''}
         >
-            paragraph
+            <Paragraph/>
         </button>
     );
     h1 && buttons.push(
@@ -87,7 +73,7 @@ const TipTapMenuBar = ({ bold,
             onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
             className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}
         >
-            h1
+            <TypeH1/>
         </button>
     );
     h2 && buttons.push(
@@ -95,7 +81,7 @@ const TipTapMenuBar = ({ bold,
             onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
             className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}
         >
-            h2
+            <TypeH2/>
         </button>
     );
     h3 && buttons.push(
@@ -103,31 +89,7 @@ const TipTapMenuBar = ({ bold,
             onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
             className={editor.isActive('heading', { level: 3 }) ? 'is-active' : ''}
         >
-            h3
-        </button>
-    );
-    h4 && buttons.push(
-        <button
-            onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-            className={editor.isActive('heading', { level: 4 }) ? 'is-active' : ''}
-        >
-            h4
-        </button>
-    );
-    h5 && buttons.push(
-        <button
-            onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-            className={editor.isActive('heading', { level: 5 }) ? 'is-active' : ''}
-        >
-            h5
-        </button>
-    );
-    h6 && buttons.push(
-        <button
-            onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-            className={editor.isActive('heading', { level: 6 }) ? 'is-active' : ''}
-        >
-            h6
+            <TypeH3/>
         </button>
     );
     bulletList && buttons.push(

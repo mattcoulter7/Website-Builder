@@ -4,8 +4,6 @@ import ComponentDAO from "../../../DAOs/ComponentDAO";
 import ComponentDTO from "../../../DTOs/ComponentDTO";
 import TipTap from "./TipTap";
 
-
-
 export default class blah extends React.Component {
     save(values = {}) {
         ComponentDAO

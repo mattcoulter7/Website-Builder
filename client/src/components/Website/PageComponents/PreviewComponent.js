@@ -15,7 +15,9 @@ export default class PreviewComponent extends React.Component {
         if (!CustomComponent) return (<></>);
 
         return (
-            <CustomComponent component={this.props.component} />
+            <div translate="no" className="ProseMirror" tabindex="0">
+                <CustomComponent component={this.props.component} />
+            </div>
         );
     }
 }

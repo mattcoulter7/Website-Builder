@@ -4,19 +4,16 @@ import './Component.css';
 import * as ComponentMapping from "./ComponentMapping";
 
 import ComponentDAO from "../../../DAOs/ComponentDAO";
+import OptionsMenu from "./OptionsMenu";
+
+import CustomFocusser from "./CustomFocusser";
 
 export default class EditableComponent extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            showOptions:false
+            focus: false
         }
-    }
-
-    toggleOptions(enabled) {
-        this.setState({
-            showOptions:enabled
-        })
     }
 
     render() {
@@ -24,31 +21,30 @@ export default class EditableComponent extends React.Component {
         if (!CustomComponent) return (<></>);
 
         return (
-            <div style={{
-                ...this.state.showOptions ? {
-                    border:"aqua 3px solid"
-                } : {}
-            }} onMouseEnter={() => this.toggleOptions(true)} onMouseLeave={() => this.toggleOptions(false)}>
-                <CustomComponent component={this.props.component}>
-                    {(() => {
-                        if (this.state.showOptions){
-                            return (
-                                <div class="row shadow-sm p-3 mb-5 bg-white rounded">
-                                    <button onClick={() => ComponentDAO.delete(this.props.component._id).then((result) => window.location.reload())}>
-                                        Delete
-                                    </button>
-                                    <button onClick={() => {}}>
-                                        Up
-                                    </button>
-                                    <button onClick={() => {}}>
-                                        Down
-                                    </button>
-                                </div>
-                            )
-                        }
-                    })()}
-                </CustomComponent>
-            </div>
+            <CustomFocusser
+                onFocus={(e) => {
+                    EditableComponent.active && EditableComponent.active.setState({
+                        focus: false
+                    })
+                    EditableComponent.active = this;
+                    EditableComponent.active.setState({
+                        focus: true
+                    })
+                }}>
+                <div
+                    style={{
+                        ...this.state.showOptions ? {
+                            border: "aqua 3px solid"
+                        } : {}
+                    }}>
+                    <CustomComponent component={this.props.component}>
+                        {(() => this.state.focus && <OptionsMenu component={this.props.component} />
+                        )()}
+                    </CustomComponent>
+                </div>
+            </CustomFocusser>
         );
     }
+
+    static Active;
 }

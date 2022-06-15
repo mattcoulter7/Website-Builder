@@ -9,6 +9,7 @@ import Page from '../layouts/Page';
 
 import EditableComponent from "../components/Website/PageComponents/EditableComponent"
 import NewLine from "../components/Website/PageComponents/NewLine"
+import CustomFocusser from "../components/Website/PageComponents/CustomFocusser"
 
 export default () => {
     var {_id} = useParams();
@@ -36,19 +37,25 @@ export default () => {
                 body: `<p>Example Body</p>`
             }))
             .then(() => {
-                window.location.reload();
             })
     }
 
     return (
         <Page>
-            {components.map(comp => (
-                <>
-                    <NewLine onNew={() => onNewComponent()}></NewLine>
-                    <EditableComponent component={comp}/>
-                </>
-            ))}
-            <NewLine onNew={() => onNewComponent()}></NewLine>
+            <CustomFocusser
+                onBlur={(e) => {
+                    EditableComponent.active && EditableComponent.active.setState({
+                        focus:false
+                    })
+                }}>
+                {components.map(comp => (
+                    <>
+                        <NewLine onNew={() => onNewComponent()}></NewLine>
+                        <EditableComponent component={comp}/>
+                    </>
+                ))}
+                <NewLine onNew={() => onNewComponent()}></NewLine>
+            </CustomFocusser>
         </Page>
     );
 }
