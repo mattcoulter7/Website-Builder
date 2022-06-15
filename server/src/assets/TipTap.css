@@ -55,7 +55,7 @@
 .invisible-fade {
     opacity: 0;
     transition: all 250ms ease-in-out 0.5s;
-    display:none
+    display: none
 }
 
 .deselected {
@@ -63,9 +63,20 @@
 }
 
 .selected {
-    outline:3px black dashed ;
+    outline: 5px black solid;
 }
 
 .deselected:hover {
     opacity: 80;
+}
+
+.filtered-on {
+    -webkit-filter: blur(5px);
+    filter: blur(5px);
+    transition: all 250ms ease-in-out;
+}
+.filtered-off {
+    -webkit-filter: blur(0px);
+    filter: blur(0px);
+    transition: all 250ms ease-in-out;
 }

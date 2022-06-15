@@ -4,7 +4,7 @@ import React from 'react'
 
 import  { TypeItalic,TypeBold,TypeStrikethrough,Code,Paragraph,TypeH1,TypeH2,TypeH3 } from 'react-bootstrap-icons';
 
-import {FaBold,FaItalic,FaStrikethrough,FaCode,FaParagraph,FaUndo,FaRedo} from 'react-icons/fa'
+import {FaBold,FaItalic,FaStrikethrough,FaCode,FaParagraph,FaUndo,FaRedo,FaAlignLeft,FaAlignRight,FaAlignCenter,FaAlignJustify} from 'react-icons/fa'
 
 import {GoListUnordered,GoListOrdered,GoHorizontalRule} from 'react-icons/go'
 import {GrBlockQuote} from 'react-icons/gr'
@@ -26,6 +26,10 @@ const TipTapMenuBar = ({
     hardBreak = true,
     undo = true,
     redo = true,
+    alignLeft = true,
+    alignMiddle: alignCenter = true,
+    alignRight = true,
+    alignJustify = true,
     editor = true,
     visible = true 
 }) => {
@@ -88,6 +92,38 @@ const TipTapMenuBar = ({
             className={editor.isActive('heading', { level: 3 }) ? 'btn btn-primary btn-sm is-active m-1' : 'btn btn-secondary btn-sm m-1'}
         >
             <TypeH3/>
+        </button>
+    );
+    alignLeft && buttons.push(
+        <button
+            onClick={() => editor.commands.setTextAlign('left')}
+            className={editor.isActive('left') ? 'btn btn-primary btn-sm is-active m-1' : 'btn btn-secondary btn-sm m-1'}
+        >
+            <FaAlignLeft/>
+        </button>
+    );
+    alignCenter && buttons.push(
+        <button
+            onClick={() => editor.commands.setTextAlign('center')}
+            className={editor.isActive('center') ? 'btn btn-primary btn-sm is-active m-1' : 'btn btn-secondary btn-sm m-1'}
+        >
+            <FaAlignCenter/>
+        </button>
+    );
+    alignRight && buttons.push(
+        <button
+            onClick={() => editor.commands.setTextAlign('right')}
+            className={editor.isActive('right') ? 'btn btn-primary btn-sm is-active m-1' : 'btn btn-secondary btn-sm m-1'}
+        >
+            <FaAlignRight/>
+        </button>
+    );
+    alignJustify && buttons.push(
+        <button
+            onClick={() => editor.commands.setTextAlign('justify')}
+            className={editor.isActive('justify') ? 'btn btn-primary btn-sm is-active m-1' : 'btn btn-secondary btn-sm m-1'}
+        >
+            <FaAlignJustify/>
         </button>
     );
     bulletList && buttons.push(

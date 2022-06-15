@@ -6,7 +6,7 @@ export default class blah extends React.Component {
     render() {
         return (
             <div style={{
-                backgroundColor:"black",
+                backgroundColor:"rgba(13, 13, 13, 0.1)",
                 height:"2px",
                 width:"100%",
                 display:"flex",

@@ -20,8 +20,11 @@ export default class EditableComponent extends React.Component {
         var CustomComponent = ComponentMapping.Edit[this.props.component.type];
         if (!CustomComponent) return (<></>);
 
+        if (EditableComponent.active){
+            debugger;
+        }
         return (
-            <CustomFocusser className={this.state.focus ? "selected" : "deselected"}
+            <CustomFocusser className={`pb-5 pt-5 ${this.state.focus ? "selected" : "deselected"} ${EditableComponent.active && EditableComponent.active.state.focus ? (EditableComponent.active == this ? "filtered-off" : "filtered-on") : "filtered-off"}`}
                 onFocus={(e) => {
                     EditableComponent.active && EditableComponent.active.setState({
                         focus: false
@@ -46,5 +49,5 @@ export default class EditableComponent extends React.Component {
         );
     }
 
-    static Active;
+    static active;
 }

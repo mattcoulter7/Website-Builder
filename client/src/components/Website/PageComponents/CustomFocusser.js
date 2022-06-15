@@ -29,6 +29,6 @@ export default class CustomFocusser extends Component {
     }
 
     render() {
-        return <div className={this.props.className} ref={this.wrapperRef}>{this.props.children}</div>;
+        return <div className={this.props.className} style={this.props.style || {}} ref={this.wrapperRef}>{this.props.children}</div>;
     }
 }
