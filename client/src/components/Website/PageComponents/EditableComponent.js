@@ -21,7 +21,7 @@ export default class EditableComponent extends React.Component {
         if (!CustomComponent) return (<></>);
 
         return (
-            <CustomFocusser
+            <CustomFocusser className={this.state.focus ? "selected" : "deselected"}
                 onFocus={(e) => {
                     EditableComponent.active && EditableComponent.active.setState({
                         focus: false
@@ -31,16 +31,16 @@ export default class EditableComponent extends React.Component {
                         focus: true
                     })
                 }}>
-                <div
-                    style={{
-                        ...this.state.showOptions ? {
-                            border: "aqua 3px solid"
-                        } : {}
-                    }}>
-                    <CustomComponent component={this.props.component}>
-                        {(() => this.state.focus && <OptionsMenu component={this.props.component} />
-                        )()}
-                    </CustomComponent>
+                <div className="row">
+                    <div className="col-1">
+                        <OptionsMenu className={this.state.focus ? "visible-fade" : "invisible-fade"} component={this.props.component} />
+                    </div>
+                    <div className="col-10">
+                        <CustomComponent component={this.props.component} />
+                    </div>
+                    <div className="col-1">
+                        <OptionsMenu className={this.state.focus ? "visible-fade" : "invisible-fade"} component={this.props.component} />
+                    </div>
                 </div>
             </CustomFocusser>
         );

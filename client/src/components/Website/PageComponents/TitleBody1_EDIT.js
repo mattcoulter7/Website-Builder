@@ -17,8 +17,7 @@ export default class blah extends React.Component {
     }
     render() {
         return (
-            <div className="container">
-                {this.props.children}
+            <div className={`container ${this.props.className}`}>
                 <div className="row">
                     <div className="col">
                         <TipTap value={this.props.component.title} onChange={(e) => this.save({ title: e.editor.getHTML() })} />
@@ -27,6 +26,7 @@ export default class blah extends React.Component {
                         <TipTap value={this.props.component.body} onChange={(e) => this.save({ body: e.editor.getHTML() })} />
                     </div>
                 </div>
+                {this.props.children}
             </div>
         );
     }

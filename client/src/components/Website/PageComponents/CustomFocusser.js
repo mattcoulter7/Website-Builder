@@ -22,13 +22,13 @@ export default class CustomFocusser extends Component {
     handleClickOutside(event) {
         const isOutside = this.wrapperRef && !this.wrapperRef.current.contains(event.target);
         if (isOutside) {
-            this.props.onBlur(event);
+            this.props.onBlur && this.props.onBlur(event);
         } else {
-            this.props.onFocus(event);
+            this.props.onFocus && this.props.onFocus(event);
         }
     }
 
     render() {
-        return <div ref={this.wrapperRef}>{this.props.children}</div>;
+        return <div className={this.props.className} ref={this.wrapperRef}>{this.props.children}</div>;
     }
 }

@@ -20,16 +20,14 @@ const TipTap = ({ value, onChange }) => {
     })
 
     return (
-        <CustomFocusser 
+        <CustomFocusser
             onFocus={(e) => {
                 setFocus(true)
             }}
             onBlur={(e) => {
                 setFocus(false)
             }}>
-            {(() => {
-                return focus && <TipTapMenuBar editor={editor} />
-            })()}
+            <TipTapMenuBar visible={focus} editor={editor} />
             <EditorContent editor={editor} />
         </CustomFocusser>
     )

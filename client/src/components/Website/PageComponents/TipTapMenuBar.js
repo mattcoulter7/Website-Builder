@@ -4,11 +4,16 @@ import React from 'react'
 
 import  { TypeItalic,TypeBold,TypeStrikethrough,Code,Paragraph,TypeH1,TypeH2,TypeH3 } from 'react-bootstrap-icons';
 
+import {FaBold,FaItalic,FaStrikethrough,FaCode,FaParagraph,FaUndo,FaRedo} from 'react-icons/fa'
+
+import {GoListUnordered,GoListOrdered,GoHorizontalRule} from 'react-icons/go'
+import {GrBlockQuote} from 'react-icons/gr'
+import {BsFillFileEarmarkBreakFill} from 'react-icons/bs'
+
 const TipTapMenuBar = ({ 
     bold = true,
     italic = true,
     strike = true,
-    code = true,
     paragraph = true,
     h1 = true,
     h2 = true,
@@ -21,7 +26,8 @@ const TipTapMenuBar = ({
     hardBreak = true,
     undo = true,
     redo = true,
-    editor = true 
+    editor = true,
+    visible = true 
 }) => {
     if (!editor) {
         return null;
@@ -31,47 +37,39 @@ const TipTapMenuBar = ({
     bold && buttons.push(
         <button
             onClick={() => editor.chain().focus().toggleBold().run()}
-            className={editor.isActive('bold') ? 'is-active' : ''}
+            className={editor.isActive('bold') ? 'btn btn-primary btn-sm is-active m-1' : 'btn btn-secondary btn-sm m-1'}
         >
-            <TypeBold/>
+            <FaBold/>
         </button>
     )
     italic && buttons.push(
         <button
             onClick={() => editor.chain().focus().toggleItalic().run()}
-            className={editor.isActive('italic') ? 'is-active' : ''}
+            className={editor.isActive('italic') ? 'btn btn-primary btn-sm is-active m-1' : 'btn btn-secondary btn-sm m-1'}
         >
-            <TypeItalic/>
+            <FaItalic/>
         </button>
     );
     strike && buttons.push(
         <button
             onClick={() => editor.chain().focus().toggleStrike().run()}
-            className={editor.isActive('strike') ? 'is-active' : ''}
+            className={editor.isActive('strike') ? 'btn btn-primary btn-sm is-active m-1' : 'btn btn-secondary btn-sm m-1'}
         >
-            <TypeStrikethrough/>
-        </button>
-    );
-    code && buttons.push(
-        <button
-            onClick={() => editor.chain().focus().toggleCode().run()}
-            className={editor.isActive('code') ? 'is-active' : ''}
-        >
-            <Code/>
+            <FaStrikethrough/>
         </button>
     );
     paragraph && buttons.push(
         <button
             onClick={() => editor.chain().focus().setParagraph().run()}
-            className={editor.isActive('paragraph') ? 'is-active' : ''}
+            className={editor.isActive('paragraph') ? 'btn btn-primary btn-sm is-active m-1' : 'btn btn-secondary btn-sm m-1'}
         >
-            <Paragraph/>
+            <FaParagraph/>
         </button>
     );
     h1 && buttons.push(
         <button
             onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-            className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}
+            className={editor.isActive('heading', { level: 1 }) ? 'btn btn-primary btn-sm is-active m-1' : 'btn btn-secondary btn-sm m-1'}
         >
             <TypeH1/>
         </button>
@@ -79,7 +77,7 @@ const TipTapMenuBar = ({
     h2 && buttons.push(
         <button
             onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-            className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}
+            className={editor.isActive('heading', { level: 2 }) ? 'btn btn-primary btn-sm is-active m-1' : 'btn btn-secondary btn-sm m-1'}
         >
             <TypeH2/>
         </button>
@@ -87,7 +85,7 @@ const TipTapMenuBar = ({
     h3 && buttons.push(
         <button
             onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-            className={editor.isActive('heading', { level: 3 }) ? 'is-active' : ''}
+            className={editor.isActive('heading', { level: 3 }) ? 'btn btn-primary btn-sm is-active m-1' : 'btn btn-secondary btn-sm m-1'}
         >
             <TypeH3/>
         </button>
@@ -95,61 +93,65 @@ const TipTapMenuBar = ({
     bulletList && buttons.push(
         <button
             onClick={() => editor.chain().focus().toggleBulletList().run()}
-            className={editor.isActive('bulletList') ? 'is-active' : ''}
+            className={editor.isActive('bulletList') ? 'btn btn-primary btn-sm is-active m-1' : 'btn btn-secondary btn-sm m-1'}
         >
-            bullet list
+            <GoListUnordered/>
         </button>
     );
     orderedList && buttons.push(
         <button
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
-            className={editor.isActive('orderedList') ? 'is-active' : ''}
+            className={editor.isActive('orderedList') ? 'btn btn-primary btn-sm is-active m-1' : 'btn btn-secondary btn-sm m-1'}
         >
-            ordered list
+            <GoListOrdered/>
         </button>
     );
     codeBlock && buttons.push(
         <button
             onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-            className={editor.isActive('codeBlock') ? 'is-active' : ''}
+            className={editor.isActive('codeBlock') ? 'btn btn-primary btn-sm is-active m-1' : 'btn btn-secondary btn-sm m-1'}
         >
-            code block
+            <FaCode/>
         </button>
     );
     blockQuote && buttons.push(
         <button
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
-            className={editor.isActive('blockquote') ? 'is-active' : ''}
+            className={editor.isActive('blockquote') ? 'btn btn-primary btn-sm is-active m-1' : 'btn btn-secondary btn-sm m-1'}
         >
-            blockquote
+            <GrBlockQuote/>
         </button>
     );
     horizontalRule && buttons.push(
-        <button onClick={() => editor.chain().focus().setHorizontalRule().run()}>
-            horizontal rule
+        <button className='btn btn-outline-primary btn-sm is-active m-1'
+            onClick={() => editor.chain().focus().setHorizontalRule().run()}>
+            <GoHorizontalRule/>
         </button>
     );
     hardBreak && buttons.push(
-        <button onClick={() => editor.chain().focus().setHardBreak().run()}>
-            hard break
+        <button className='btn btn-outline-primary btn-sm is-active m-1'
+            onClick={() => editor.chain().focus().setHardBreak().run()}>
+            <BsFillFileEarmarkBreakFill/>
         </button>
 
     );
     undo && buttons.push(
-        <button onClick={() => editor.chain().focus().undo().run()}>
-            undo
+        <button className='btn btn-outline-primary btn-sm is-active m-1'
+            onClick={() => editor.chain().focus().undo().run()}>
+            <FaUndo/>
         </button>
     );
     redo && buttons.push(
-        <button onClick={() => editor.chain().focus().redo().run()}>
-            redo
+        <button className='btn btn-outline-primary btn-sm is-active m-1'
+            onClick={() => editor.chain().focus().redo().run()}>
+            <FaRedo/>
         </button>
     );
 
     return (
-        <>
+        <div className={`shadow-sm p-3 bg-white rounded ${visible ? "visible-fade" : "invisible-fade"}`}>
             {buttons}
-        </>
+        </div>
     )
 }
 

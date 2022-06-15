@@ -1,5 +1,8 @@
 import React from 'react'
 
+import {FaArrowUp,FaArrowDown} from 'react-icons/fa'
+import {RiDeleteBin6Fill} from 'react-icons/ri'
+
 import ComponentDAO from '../../../DAOs/ComponentDAO';
 import ComponentDTO from '../../../DTOs/ComponentDTO';
 
@@ -7,7 +10,8 @@ const OptionsMenu = ({
     destroy = true,
     up = true,
     down = true,
-    component
+    component,
+    className
 }) => {
     if (!component) {
         return null;
@@ -16,28 +20,31 @@ const OptionsMenu = ({
     var buttons = [];
     destroy && buttons.push(
         <button
+            className="btn btn-primary btn-sm m-1"
             onClick={() => ComponentDAO.delete(component._id).then((result => result))}
         >
-            Delete
+            <RiDeleteBin6Fill/>
         </button>
     )
     up && buttons.push(
         <button
+            className="btn btn-primary btn-sm m-1"
             onClick={() => {}}
         >
-            Up
+            <FaArrowUp/>
         </button>
     );
     down && buttons.push(
         <button
+            className="btn btn-primary btn-sm m-1"
             onClick={() => {}}
         >
-            Down
+            <FaArrowDown/>
         </button>
     );
 
     return (
-        <div class="row shadow-sm p-3 mb-5 bg-white rounded">
+        <div class={`shadow-sm p-3 bg-white rounded ${className}`}>
             {buttons}
         </div>
     )
