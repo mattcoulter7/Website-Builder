@@ -4,6 +4,10 @@ import { loremIpsum } from 'react-lorem-ipsum';
 
 import ComponentDTO from "../DTOs/ComponentDTO"
 import ComponentDAO from "../DAOs/ComponentDAO"
+import PageDTO from "../DTOs/PageDTO"
+import PageDAO from "../DAOs/PageDAO"
+import WebsiteDTO from "../DTOs/WebsiteDTO"
+import WebsiteDAO from "../DAOs/WebsiteDAO"
 
 import Page from '../layouts/Page';
 
@@ -12,8 +16,6 @@ import NewLine from "../components/Website/PageComponents/NewLine"
 import CustomFocusser from "../components/Website/PageComponents/CustomFocusser"
 
 import TitleBody1 from "../components/Website/PageComponents/TitleBody1"
-
-
 
 const onDeselect = () => {
     EditableComponent.active && EditableComponent.active.setState({
@@ -29,6 +31,9 @@ export default () => {
     var { _id } = useParams();
 
     const [components, setComponents] = useState([]);
+    const [page, setPage] = useState(null);
+    const [website, setWebsite] = useState(null);
+    const [pages, setPages] = useState([]);
 
     useEffect(() => {
         ComponentDAO
@@ -38,6 +43,27 @@ export default () => {
             })
             .then((components) => {
                 setComponents(components)
+            })
+
+        PageDAO
+            .selectId(_id)
+            .then((page) => {
+                setPage(page);
+                
+                WebsiteDAO
+                    .selectId(page.websiteId)
+                    .then((website) => {
+                        setWebsite(website);
+                        
+                        PageDAO
+                            .select()
+                            .then((pages) => {
+                                return pages.filter(p => p.websiteId == website._id)
+                            })
+                            .then((pages) => {
+                                setPages(pages);
+                            })
+                    });
             })
     });
 
@@ -56,7 +82,7 @@ export default () => {
                 {components.map(comp => (
                     <>
                         <NewLine onNew={() => onNewComponent()}></NewLine>
-                        <EditableComponent component={comp} />
+                        <EditableComponent website={website} page={page} pages={pages} component={comp} />
                     </>
                 ))}
                 <NewLine onNew={() => onNewComponent()}></NewLine>

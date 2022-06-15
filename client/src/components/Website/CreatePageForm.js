@@ -20,7 +20,6 @@ export default class blah extends React.Component {
                 websiteId: this.props.websiteId
             }))
             .then((result) => {
-                debugger;
                 window.location.href = `/website/edit/${this.props.websiteId}`
             })
     }

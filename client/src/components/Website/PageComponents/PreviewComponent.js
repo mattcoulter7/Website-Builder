@@ -13,7 +13,7 @@ export default class PreviewComponent extends React.Component {
 
         return (
             <div translate="no" className="ProseMirror" tabindex="0">
-                <CustomComponent component={this.props.component} />
+                <CustomComponent website={this.props.website} page={this.props.page} pages={this.props.pages} component={this.props.component} />
             </div>
         );
     }

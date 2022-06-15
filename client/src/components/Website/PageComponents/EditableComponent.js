@@ -20,9 +20,6 @@ export default class EditableComponent extends React.Component {
         var CustomComponent = ComponentMapping.Edit[this.props.component.type];
         if (!CustomComponent) return (<></>);
 
-        if (EditableComponent.active){
-            debugger;
-        }
         return (
             <CustomFocusser className={`pb-5 pt-5 ${this.state.focus ? "selected" : "deselected"} ${EditableComponent.active && EditableComponent.active.state.focus ? (EditableComponent.active == this ? "filtered-off" : "filtered-on") : "filtered-off"}`}
                 onFocus={(e) => {
@@ -39,7 +36,7 @@ export default class EditableComponent extends React.Component {
                         <OptionsMenu className={this.state.focus ? "visible-fade" : "invisible-fade"} component={this.props.component} />
                     </div>
                     <div className="col-10">
-                        <CustomComponent component={this.props.component} />
+                        <CustomComponent website={this.props.website} page={this.props.page} pages={this.props.pages} component={this.props.component} />
                     </div>
                     <div className="col-1">
                         <LayoutsMenu className={this.state.focus ? "visible-fade" : "invisible-fade"} component={this.props.component} />
