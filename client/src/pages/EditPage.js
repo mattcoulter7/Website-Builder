@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate,parsePath,useParams } from 'react-router-dom';
+import { Navigate, parsePath, useParams } from 'react-router-dom';
 import { loremIpsum } from 'react-lorem-ipsum';
 
 import ComponentDTO from "../DTOs/ComponentDTO"
@@ -13,11 +13,22 @@ import CustomFocusser from "../components/Website/PageComponents/CustomFocusser"
 
 import TitleBody1 from "../components/Website/PageComponents/TitleBody1"
 
-export default () => {
-    var {_id} = useParams();
-    
-    const [components, setComponents] = useState([]);
 
+
+const onDeselect = () => {
+    EditableComponent.active && EditableComponent.active.setState({
+        focus: false
+    })
+}
+
+document.addEventListener("keydown", (e) => {
+    if (e.key == "Escape") onDeselect();
+})
+
+export default () => {
+    var { _id } = useParams();
+
+    const [components, setComponents] = useState([]);
 
     useEffect(() => {
         ComponentDAO
@@ -34,22 +45,18 @@ export default () => {
         ComponentDAO
             .insert(new ComponentDTO({
                 ...TitleBody1._DefaultComponentValues(),
-                pageId:_id
+                pageId: _id
             }))
     }
 
     return (
         <Page>
             <CustomFocusser
-                onBlur={(e) => {
-                    EditableComponent.active && EditableComponent.active.setState({
-                        focus:false
-                    })
-                }}>
+                onBlur={onDeselect}>
                 {components.map(comp => (
                     <>
                         <NewLine onNew={() => onNewComponent()}></NewLine>
-                        <EditableComponent component={comp}/>
+                        <EditableComponent component={comp} />
                     </>
                 ))}
                 <NewLine onNew={() => onNewComponent()}></NewLine>

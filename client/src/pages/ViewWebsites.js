@@ -33,7 +33,7 @@ export default (props) => {
                     <Card title={website.companyName} description="">
                         <a href={`/website/edit/${website._id}`} className="btn btn-primary">Edit Website</a>
                         <a href={`/website/view/${website._id}`} className="btn btn-secondary">View Website</a>
-                        <button onClick={() => WebsiteDAO.delete(website._id).then(() => window.location.reload())} className="btn btn-danger">Delete Website</button>
+                        <button onClick={() => WebsiteDAO.delete(website._id)} className="btn btn-danger">Delete Website</button>
                     </Card>
                 )}
                 <Card title="New Website" description="Create a new website">

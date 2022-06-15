@@ -63,7 +63,8 @@
 }
 
 .selected {
-    outline: 5px black solid;
+    border-top:5px black solid;
+    border-bottom:5px black solid;
 }
 
 .deselected:hover {
