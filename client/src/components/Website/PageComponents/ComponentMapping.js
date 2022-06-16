@@ -7,7 +7,9 @@ import Carousel1_EDIT from "./Image/Carousel1_EDIT"
 
 import Col_EDIT from "./Layouts/Col_EDIT"
 import Row_EDIT from "./Layouts/Row_EDIT"
+
 import Section_EDIT from "./Layouts/Section_EDIT"
+import Container_EDIT from "./Layouts/Container_EDIT"
 
 import ComponentDAO from "../../../DAOs/ComponentDAO"
 import ComponentDTO from "../../../DTOs/ComponentDTO"
@@ -104,6 +106,18 @@ const componentMappings = {
         return ComponentDAO.update(new ComponentDTO({
             ...comp.toFilteredJSON(),
             type: "Section"
+        }))
+    }),
+    'Container': new ComponentMap(null, Container_EDIT, (parentId) => {
+        return ComponentDAO
+            .insert(new ComponentDTO({
+                parentId: parentId,
+                type: "Container"
+            }))
+    }, (comp) => {
+        return ComponentDAO.update(new ComponentDTO({
+            ...comp.toFilteredJSON(),
+            type: "Container"
         }))
     })
 }

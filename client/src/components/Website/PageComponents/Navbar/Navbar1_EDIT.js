@@ -14,7 +14,7 @@ export default class Navbar1 extends EditComponent {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             {this.props.pages.map(page => 
-                                <Nav.Link key={page._id} href={`/page/edit/${page._id}`}>{page.name}</Nav.Link>
+                                <Nav.Link active={page._id == this.props.page._id} key={page._id} href={`/page/edit?_id=${page._id}`}>{page.name}</Nav.Link>
                             )}
                             <Nav.Link href={`/page/create/${this.props.website._id}`}>New Page</Nav.Link>
                         </Nav>

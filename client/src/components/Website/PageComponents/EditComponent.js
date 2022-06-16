@@ -7,26 +7,16 @@ import CustomFocusser from "./CustomFocusser"
 import LayoutsMenu from "./LayoutsMenu";
 import OptionsMenu from "./OptionsMenu";
 
-export const save = (values = {}) => {
-    return ComponentDAO
-        .update(new ComponentDTO({
-            ...this.props.component.toJSON(),
-            ...values
-        }))
-        .then((result) => {
-            console.log(result)
-        })
-}
-
 export default class EditComponent extends React.Component {
-    constructor(props,options = {}) {
+    constructor(props, options = {}) {
         super(props);
         this.state = {
             focus: false,
+            filter:false,
             children: []
         }
         this.options = {
-            directContact:true,
+            directContact: true,
             ...options
         }
 
@@ -83,21 +73,38 @@ export default class EditComponent extends React.Component {
             })
     }
 
+    onFilter(on){
+        debugger;
+        this.setState({
+            filter: on
+        })
+        this.props.parentContext() && this.props.parentContext().onFilter(on)
+    }
+
+    onSelect(){
+        //EditComponent.selected = this;
+        this.setState({
+            focus: true
+        })
+    }
+
+    onDeselect(){
+        this.setState({
+            focus: false
+        })
+    }
+
     render(children) {
         var className = "";
         if (this.state.focus) {
-            className += " selected"
+            className += "selected"
         } else {
-            className += " deselected"
+            className += "deselected"
         }
-        if (!EditComponent.selected) {
-            className += " filtered-off"
+        if (this.state.filter) {
+            className += " filtered-on"
         } else {
-            if (EditComponent.selected == this) {
-                className += " filtered-off"
-            } else {
-                className += " filtered-off"
-            }
+            className += " filtered-off"
         }
 
         return (
@@ -107,14 +114,11 @@ export default class EditComponent extends React.Component {
                     className={className}
                     onFocus={(e) => {
                         EditComponent.selected = this;
-                        this.setState({
-                            focus: true
-                        })
+                        this.onSelect()
+                        this.onFilter(false)
                     }}
                     onBlur={(e) => {
-                        this.setState({
-                            focus: false
-                        })
+                        this.onDeselect()
                     }}>
 
                     {this.props.component.type}

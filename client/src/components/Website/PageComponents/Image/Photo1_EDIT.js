@@ -11,14 +11,18 @@ export default class Photo1_Edit extends EditComponent {
         return super.render(
             <>
                 <img src={this.props.component.src} className="img-fluid" alt="Responsive image" />
-                <input className="form-control" id="formFileLg" type="file" onChange={(e) => {
-                    var file = e.target.files[0];
-                    if (!file) return;
-                    FileDAO.insert(file)
-                        .then((result) => {
-                            this.save({ src: result })
-                        })
-                }} />
+                {
+                    (() => {
+                        return this.state.focus ? <input className="form-control" id="formFileLg" type="file" onChange={(e) => {
+                            var file = e.target.files[0];
+                            if (!file) return;
+                            FileDAO.insert(file)
+                                .then((result) => {
+                                    this.save({ src: result })
+                                })
+                        }} /> : null
+                    })()
+                }
             </>
         );
     }
