@@ -10,19 +10,11 @@ import ComponentMapping from './ComponentMapping'
 
 const LayoutsMenu = ({
     component,
-    className
+    className,
+    parentContext
 }) => {
     if (!component) {
         return null;
-    }
-
-    const changeType = (compType) => {
-        let values = compType._DefaultComponentValues();
-        ComponentDAO.update(new ComponentDTO({
-            ...values,
-            ...component.toFilteredJSON(),
-            type:values.type
-        }));
     }
 
     const buttons = Object.entries(ComponentMapping).map(pair => 
@@ -30,6 +22,13 @@ const LayoutsMenu = ({
             className="btn btn-primary btn-sm m-1"
             onClick={() => {
                 pair[1].update(component)
+                    .then((result) => {
+                        let thisComponent = parentContext();
+                        let thisComponentContainer = thisComponent.props.parentContext();
+                        if (thisComponentContainer){
+                            thisComponentContainer.onUpdate(result)
+                        }
+                    })
             }}
         >
             {pair[0]}

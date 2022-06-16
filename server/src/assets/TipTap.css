@@ -84,3 +84,6 @@
     filter: blur(0px);
     transition: all 250ms ease-in-out;
 }
+.editable {
+    border: #EEEEEE solid 2px;
+}

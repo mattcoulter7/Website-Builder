@@ -7,8 +7,6 @@ import FileDAO from "../../../../DAOs/FileDAO";
 
 import { Carousel } from "react-bootstrap";
 import EditComponent from "../EditComponent";
-import LayoutsMenu from "../LayoutsMenu";
-import OptionsMenu from "../OptionsMenu";
 
 export default class Carousel1_EDIT extends EditComponent {
     render() {

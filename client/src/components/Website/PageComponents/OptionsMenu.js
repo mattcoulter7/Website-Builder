@@ -11,7 +11,8 @@ const OptionsMenu = ({
     up = true,
     down = true,
     component,
-    className
+    className,
+    parentContext
 }) => {
     if (!component) {
         return null;
@@ -21,7 +22,17 @@ const OptionsMenu = ({
     destroy && buttons.push(
         <button
             className="btn btn-primary btn-sm m-1"
-            onClick={() => ComponentDAO.delete(component._id).then((result => result))}
+            onClick={() => {
+                ComponentDAO
+                    .delete(component._id)
+                    .then((result) => {
+                        let thisComponent = parentContext();
+                        let thisComponentContainer = thisComponent.props.parentContext();
+                        if (thisComponentContainer){
+                            thisComponentContainer.onDelete(component)
+                        }
+                    })
+            }}
         >
             <RiDeleteBin6Fill/>
         </button>

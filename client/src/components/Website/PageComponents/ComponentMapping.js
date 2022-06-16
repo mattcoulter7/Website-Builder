@@ -22,7 +22,7 @@ class ComponentMap {
 }
 
 const componentMappings = {
-    'Text1': new ComponentMap(null, Text1_EDIT, (parentId, existingComp = null) => {
+    'Text1': new ComponentMap(null, Text1_EDIT, (parentId) => {
         return ComponentDAO.insert(new ComponentDTO({
             parentId: parentId,
             type: "Text1",
@@ -35,7 +35,7 @@ const componentMappings = {
             type: "Text1"
         }))
     }),
-    'Navbar1': new ComponentMap(null, Navbar1_EDIT, (parentId, existingComp = null) => {
+    'Navbar1': new ComponentMap(null, Navbar1_EDIT, (parentId) => {
         return ComponentDAO.insert(new ComponentDTO({
             parentId: parentId,
             type: "Navbar1"
@@ -46,7 +46,7 @@ const componentMappings = {
             type: "Navbar1"
         }))
     }),
-    'Photo1': new ComponentMap(null, Photo1_EDIT, (parentId, existingComp = null) => {
+    'Photo1': new ComponentMap(null, Photo1_EDIT, (parentId) => {
         return ComponentDAO.insert(new ComponentDTO({
             parentId: parentId,
             type: "Photo1",
@@ -70,35 +70,41 @@ const componentMappings = {
             type: "Carousel1"
         }))
     }),
-    'Col': new ComponentMap(null, Col_EDIT, (parentId, existingComp = null) => {
+    'Col': new ComponentMap(null, Col_EDIT, (parentId) => {
         return ComponentDAO
             .insert(new ComponentDTO({
                 parentId: parentId,
                 type: "Col"
             }))
-            .then((result) => {
-                componentMappings.Text1.create(result._id);
-            })
+    }, (comp) => {
+        return ComponentDAO.update(new ComponentDTO({
+            ...comp.toFilteredJSON(),
+            type: "Col"
+        }))
     }),
-    'Row': new ComponentMap(null, Row_EDIT, (parentId, existingComp = null) => {
+    'Row': new ComponentMap(null, Row_EDIT, (parentId) => {
         return ComponentDAO
             .insert(new ComponentDTO({
                 parentId: parentId,
                 type: "Row"
             }))
-            .then((result) => {
-                componentMappings.Col.create(result._id)
-            })
+    }, (comp) => {
+        return ComponentDAO.update(new ComponentDTO({
+            ...comp.toFilteredJSON(),
+            type: "Row"
+        }))
     }),
-    'Section': new ComponentMap(null, Section_EDIT, (parentId, existingComp = null) => {
+    'Section': new ComponentMap(null, Section_EDIT, (parentId) => {
         return ComponentDAO
             .insert(new ComponentDTO({
                 parentId: parentId,
                 type: "Section"
             }))
-            .then((result) => {
-                componentMappings.Row.create(result._id)
-            })
+    }, (comp) => {
+        return ComponentDAO.update(new ComponentDTO({
+            ...comp.toFilteredJSON(),
+            type: "Section"
+        }))
     })
 }
 

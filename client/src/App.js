@@ -34,7 +34,7 @@ function App() {
         </Route>
         <Route path='/page'>
           <Route path='/page/view/:_id' element={<ViewPage />} />
-          <Route path='/page/edit/:_id' element={<EditPage />} />
+          <Route path='/page/edit' element={<EditPage />} />
           <Route path='/page/create/:websiteId' element={<CreatePage />} />
         </Route>
       </Routes>

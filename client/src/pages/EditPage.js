@@ -17,48 +17,65 @@ import ComponentMapping from "../components/Website/PageComponents/ComponentMapp
 
 import Section from "../components/Website/PageComponents/Layouts/Section"
 
-const onDeselect = () => {
-    Section.active && Section.active.setState({
-        focus: false
-    })
-}
+import { params } from "../Utils/QueryString"
 
-document.addEventListener("keydown", (e) => {
-    if (e.key == "Escape") onDeselect();
-})
 
-export default () => {
-    var { _id } = useParams();
+export default class EditPage extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            children: [],
+            page: null,
+            website: null,
+            pages: []
+        }
+        this._id = null;
+        this.handler = this.handler.bind(this);
+        document.addEventListener("keydown", (e) => {
+            if (e.key == "Escape") {
+                this.onDeselect();
+            }
+        })
+    }
 
-    const [components, setComponents] = useState([]);
-    const [page, setPage] = useState(null);
-    const [website, setWebsite] = useState(null);
-    const [pages, setPages] = useState([]);
+    handler() {
+        return this;
+    }
+    onDelete(child){
+        this.setState({
+            children:this.state.children.filter(c => c != child)
+        })
+    }
 
-    useEffect(() => {
+    componentDidMount() {
+        this._id = params()._id;
+
         ComponentDAO
             .select()
             .then((components) => {
-                // store the children components
-                components.forEach((c1, i, self) => c1.children = self.filter(c2 => c2.parentId == c1._id))
-
                 // extract components specific to the page
-                return components.filter(c => c.parentId == _id)
+                return components.filter(c => c.parentId == this._id)
             })
             .then((components) => {
                 // store against state
-                setComponents(components)
+                this.setState({
+                    children: components
+                })
             })
 
         PageDAO
-            .selectId(_id)
+            .selectId(this._id)
             .then((page) => {
-                setPage(page);
+                this.setState({
+                    page: page
+                })
 
                 WebsiteDAO
                     .selectId(page.websiteId)
                     .then((website) => {
-                        setWebsite(website);
+                        this.setState({
+                            website: website
+                        })
 
                         PageDAO
                             .select()
@@ -66,29 +83,48 @@ export default () => {
                                 return pages.filter(p => p.websiteId == website._id)
                             })
                             .then((pages) => {
-                                setPages(pages);
+                                this.setState({
+                                    pages: pages
+                                })
                             })
                     });
             })
-    });
+    }
 
-    return (
-        <Page>
-            <CustomFocusser
-                onBlur={onDeselect}>
-                {
-                    components
-                        .filter(c => c.type == "Section")
-                        .map(comp => {
-                            const CustomComponent = ComponentMapping[comp.type]
-                            return (<>
-                                <NewLine onNew={() => ComponentMapping.Section.create(page._id)}></NewLine>
-                                <CustomComponent.edit website={website} page={page} pages={pages} component={comp} parentState={{}} />
-                            </>)
-                        })
-                }
-                <NewLine onNew={() => ComponentMapping.Section.create(page._id)}></NewLine>
-            </CustomFocusser>
-        </Page>
-    );
+    onDeselect() {
+        Section.active && Section.active.setState({
+            focus: false
+        })
+    }
+
+    onNewSection(){
+        ComponentMapping.Section.create(this._id)
+            .then((result) => {
+                this.setState({
+                    children: this.state.children.concat(result)
+                })
+            })
+    }
+
+    render() {
+        return (
+            <Page>
+                <CustomFocusser
+                    onBlur={() => this.onDeselect()}>
+                    {
+                        this.state.children
+                            .filter(c => c.type == "Section")
+                            .map(comp => {
+                                const CustomComponent = ComponentMapping[comp.type]
+                                return (<>
+                                    <NewLine onNew={() => this.onNewSection()}></NewLine>
+                                    <CustomComponent.edit website={this.state.website} page={this.state.page} pages={this.state.pages} component={comp} parentContext={this.handler}/>
+                                </>)
+                            })
+                    }
+                    <NewLine onNew={() => this.onNewSection()}></NewLine>
+                </CustomFocusser>
+            </Page>
+        );
+    }
 }

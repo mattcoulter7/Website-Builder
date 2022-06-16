@@ -31,7 +31,7 @@ export default (props) => {
             <Grid colCount={2} websiteId={_id}>
                 {pages.map(page => 
                     <Card title={page.name} description="">
-                        <a href={`/page/edit/${page._id}`} className="btn btn-primary">Edit Page</a>
+                        <a href={`/page/edit?_id=${page._id}`} className="btn btn-primary">Edit Page</a>
                         <a href={`/page/view/${page._id}`} className="btn btn-secondary">View Page</a>
                         <button onClick={() => PageDAO.delete(page._id)} className="btn btn-danger">Delete Page</button>
                     </Card>
