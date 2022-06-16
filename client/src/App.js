@@ -33,7 +33,7 @@ function App() {
           <Route path='/website/create' element={<CreateWebsite />} />
         </Route>
         <Route path='/page'>
-          <Route path='/page/view/:_id' element={<ViewPage />} />
+          <Route path='/page/view' element={<ViewPage />} />
           <Route path='/page/edit' element={<EditPage />} />
           <Route path='/page/create/:websiteId' element={<CreatePage />} />
         </Route>

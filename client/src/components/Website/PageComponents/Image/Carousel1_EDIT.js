@@ -66,8 +66,6 @@ export default class Carousel1_EDIT extends EditComponent {
                                     }} />
                                 </Carousel.Caption>
                             </Carousel.Item>)
-                            //const CustomComponent = ComponentMapping[comp.type]
-                            //return <CustomComponent.edit website={this.props.website} page={this.props.page} pages={this.props.pages} component={comp} parentContext={this.handler} />
                         })
                 }
             </Carousel>

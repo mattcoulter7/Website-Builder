@@ -11,21 +11,11 @@ import TipTap from "../TipTap";
 
 import ComponentDAO from "../../../../DAOs/ComponentDAO";
 import ComponentDTO from "../../../../DTOs/ComponentDTO";
+import CustomComponent from "../CustomComponent";
 
-export default class Carousel1_EDIT extends EditComponent {
-    constructor(props) {
-        super(props, {
-            directContact: false
-        })
-    }
-    onClickNew() {
-        ComponentMapping.CarouselItem1.create(this.props.component._id)
-            .then((result) => {
-                this.onInsert(result)
-            })
-    }
+export default class Carousel1_EDIT extends CustomComponent {
     render() {
-        return super.render(
+        return (
             <Carousel>
                 {
                     this.state.children
@@ -38,36 +28,10 @@ export default class Carousel1_EDIT extends EditComponent {
                                     src={comp.src}
                                     alt={comp.src}
                                 />
-                                <input className="form-control" id="formFileLg" type="file" onChange={(e) => {
-                                    var file = e.target.files[0];
-                                    if (!file) return;
-                                    FileDAO.insert(file)
-                                        .then((result) => {
-                                            ComponentDAO
-                                                .update(new ComponentDTO({
-                                                    ...comp.toJSON(),
-                                                    src: result
-                                                }))
-                                                .then(result => {
-                                                    this.onUpdate(result);
-                                                })
-                                        })
-                                }} />
                                 <Carousel.Caption>
-                                    <TipTap value={comp.value} onChange={(e) => {
-                                        ComponentDAO
-                                            .update(new ComponentDTO({
-                                                ...comp.toJSON(),
-                                                value: e.editor.getHTML()
-                                            }))
-                                            .then(result => {
-                                                this.onUpdate(result);
-                                            })
-                                    }} />
+                                    <div dangerouslySetInnerHTML={{__html:comp.value || ""}}></div>
                                 </Carousel.Caption>
                             </Carousel.Item>)
-                            //const CustomComponent = ComponentMapping[comp.type]
-                            //return <CustomComponent.edit website={this.props.website} page={this.props.page} pages={this.props.pages} component={comp} parentContext={this.handler} />
                         })
                 }
             </Carousel>
