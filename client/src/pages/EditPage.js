@@ -19,6 +19,8 @@ import Section from "../components/Website/PageComponents/Layouts/Section"
 
 import { params } from "../Utils/QueryString"
 
+import Panel from '../components/Website/EditWebsite/Panel';
+
 
 export default class EditPage extends React.Component {
     constructor(props) {

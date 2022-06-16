@@ -11,16 +11,18 @@ export default class Col_EDIT extends EditComponent {
             })
     }
     render() {
-        return super.render(
+        return (
             <div className="col">
                 {
-                    this.state.children
-                        .map(comp => {
-                            const CustomComponent = ComponentMapping[comp.type]
-                            return <CustomComponent.edit website={this.props.website} page={this.props.page} pages={this.props.pages} component={comp} parentContext={this.handler} />
-                        })
+                    super.render(
+                        this.state.children
+                            .map(comp => {
+                                const CustomComponent = ComponentMapping[comp.type]
+                                return <CustomComponent.edit website={this.props.website} page={this.props.page} pages={this.props.pages} component={comp} parentContext={this.handler} />
+                            })
+                    )
                 }
             </div>
-        );
+        )
     }
 }

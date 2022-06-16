@@ -7,6 +7,11 @@ import EditComponent from "../EditComponent";
 
 
 export default class Text1_EDIT extends EditComponent {
+    constructor(props){
+        super(props,{
+            directContact:false
+        })
+    }
     render() {
         return super.render(
             <TipTap value={this.props.component.value} onChange={(e) => {

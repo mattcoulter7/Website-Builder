@@ -19,11 +19,15 @@ export const save = (values = {}) => {
 }
 
 export default class EditComponent extends React.Component {
-    constructor(props) {
+    constructor(props,options = {}) {
         super(props);
         this.state = {
             focus: false,
             children: []
+        }
+        this.options = {
+            directContact:true,
+            ...options
         }
 
         this.handler = this.handler.bind(this)
@@ -34,25 +38,25 @@ export default class EditComponent extends React.Component {
     }
 
     // when a child component has been removed
-    onDelete(child){
+    onDelete(child) {
         this.setState({
-            children:this.state.children.filter(c => c != child)
+            children: this.state.children.filter(c => c != child)
         })
     }
 
     // when a child component has been added
-    onInsert(child){
+    onInsert(child) {
         this.setState({
-            children:this.state.children.concat(child)
+            children: this.state.children.concat(child)
         })
     }
 
     // this component has been updated, should cause rerender
-    onUpdate(child){
+    onUpdate(child) {
         let children = this.state.children;
         children[children.findIndex((c) => c._id == child._id)] = child;
         this.setState({
-            children:children
+            children: children
         })
     }
 
@@ -80,7 +84,7 @@ export default class EditComponent extends React.Component {
     }
 
     render(children) {
-        var className = "editable pb-5 pt-5";
+        var className = "";
         if (this.state.focus) {
             className += " selected"
         } else {
@@ -98,8 +102,8 @@ export default class EditComponent extends React.Component {
 
         return (
             <>
-                {this.props.component.type}
                 <CustomFocusser
+                    directContact={this.options.directContact}
                     className={className}
                     onFocus={(e) => {
                         EditComponent.selected = this;
@@ -112,12 +116,14 @@ export default class EditComponent extends React.Component {
                             focus: false
                         })
                     }}>
+
+                    {this.props.component.type}
                     <div className="row">
                         {
                             (() => {
                                 return this.state.focus ?
-                                    <div className="col-1">
-                                        <OptionsMenu className={this.state.focus ? "visible-fade" : "invisible-fade"} component={this.props.component} up={false} down={false} parentContext={this.handler}/>
+                                    <div className="col-2">
+                                        <OptionsMenu className={this.state.focus ? "visible-fade" : "invisible-fade"} component={this.props.component} up={false} down={false} parentContext={this.handler} />
                                     </div> : null
                             })()
                         }
@@ -127,16 +133,9 @@ export default class EditComponent extends React.Component {
                         {
                             (() => {
                                 return this.state.focus ?
-                                    <div className="col-1">
+                                    <div className="col-2">
                                         <LayoutsMenu className={this.state.focus ? "visible-fade" : "invisible-fade"} component={this.props.component} parentContext={this.handler} />
                                     </div> : null
-                            })()
-                        }
-                        {
-                            (() => {
-                                return (this.onClickNew && this.state.focus) ? <div className="col-1">
-                                    <button className="btn btn-primary" onClick={() => this.onClickNew()}>Add Child</button>
-                                </div> : null;
                             })()
                         }
                     </div>
