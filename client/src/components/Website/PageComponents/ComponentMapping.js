@@ -14,6 +14,8 @@ import Container_EDIT from "./Layouts/Container_EDIT"
 import ComponentDAO from "../../../DAOs/ComponentDAO"
 import ComponentDTO from "../../../DTOs/ComponentDTO"
 
+import NullComponent from "./NullComponent"
+
 class ComponentMap {
     constructor(preview, edit, create, update) {
         this.preview = preview
@@ -24,7 +26,7 @@ class ComponentMap {
 }
 
 const componentMappings = {
-    'Text1': new ComponentMap(null, Text1_EDIT, (parentId) => {
+    'Text1': new ComponentMap(NullComponent, Text1_EDIT, (parentId) => {
         return ComponentDAO.insert(new ComponentDTO({
             parentId: parentId,
             type: "Text1",
@@ -37,7 +39,7 @@ const componentMappings = {
             type: "Text1"
         }))
     }),
-    'Navbar1': new ComponentMap(null, Navbar1_EDIT, (parentId) => {
+    'Navbar1': new ComponentMap(NullComponent, Navbar1_EDIT, (parentId) => {
         return ComponentDAO.insert(new ComponentDTO({
             parentId: parentId,
             type: "Navbar1"
@@ -48,7 +50,7 @@ const componentMappings = {
             type: "Navbar1"
         }))
     }),
-    'Photo1': new ComponentMap(null, Photo1_EDIT, (parentId) => {
+    'Photo1': new ComponentMap(NullComponent, Photo1_EDIT, (parentId) => {
         return ComponentDAO.insert(new ComponentDTO({
             parentId: parentId,
             type: "Photo1",
@@ -61,7 +63,22 @@ const componentMappings = {
             type: "Photo1"
         }))
     }),
-    'Carousel1': new ComponentMap(null, Carousel1_EDIT, (parentId) => {
+    'CarouselItem1': new ComponentMap(NullComponent, NullComponent, (parentId) => {
+        return ComponentDAO.insert(new ComponentDTO({
+            parentId: parentId,
+            type: "CarouselItem1",
+            src:"https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg",
+            value:"<h3>Image Title</h3><p>Image Caption</p>"
+        }))
+    }, (comp) => {
+        return ComponentDAO.update(new ComponentDTO({
+            src:"https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg",
+            value:"<h3>Image Title</h3><p>Image Caption</p>",
+            ...comp.toFilteredJSON(),
+            type: "CarouselItem1"
+        }))
+    }),
+    'Carousel1': new ComponentMap(NullComponent, Carousel1_EDIT, (parentId) => {
         return ComponentDAO.insert(new ComponentDTO({
             parentId: parentId,
             type: "Carousel1"
@@ -72,7 +89,7 @@ const componentMappings = {
             type: "Carousel1"
         }))
     }),
-    'Col': new ComponentMap(null, Col_EDIT, (parentId) => {
+    'Col': new ComponentMap(NullComponent, Col_EDIT, (parentId) => {
         return ComponentDAO
             .insert(new ComponentDTO({
                 parentId: parentId,
@@ -84,7 +101,7 @@ const componentMappings = {
             type: "Col"
         }))
     }),
-    'Row': new ComponentMap(null, Row_EDIT, (parentId) => {
+    'Row': new ComponentMap(NullComponent, Row_EDIT, (parentId) => {
         return ComponentDAO
             .insert(new ComponentDTO({
                 parentId: parentId,
@@ -96,7 +113,7 @@ const componentMappings = {
             type: "Row"
         }))
     }),
-    'Section': new ComponentMap(null, Section_EDIT, (parentId) => {
+    'Section': new ComponentMap(NullComponent, Section_EDIT, (parentId) => {
         return ComponentDAO
             .insert(new ComponentDTO({
                 parentId: parentId,
@@ -108,7 +125,7 @@ const componentMappings = {
             type: "Section"
         }))
     }),
-    'Container': new ComponentMap(null, Container_EDIT, (parentId) => {
+    'Container': new ComponentMap(NullComponent, Container_EDIT, (parentId) => {
         return ComponentDAO
             .insert(new ComponentDTO({
                 parentId: parentId,

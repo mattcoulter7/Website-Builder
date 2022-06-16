@@ -6,7 +6,7 @@ import ComponentMapping from "../ComponentMapping";
 
 export default class Section_EDIT extends EditComponent {
     onClickNew() {
-        ComponentMapping.Row.create(this.props.component._id)
+        ComponentMapping.Container.create(this.props.component._id)
             .then((result) => {
                 this.onInsert(result)
             })

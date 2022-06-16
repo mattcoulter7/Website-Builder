@@ -24,7 +24,7 @@ export default class blah extends React.Component {
             .then((result) => {
                 ComponentMapping.Section.create(result._id)
                     .then(() => {
-                        window.location.href = `/page/edit/${result._id}`
+                        window.location.href = `/page/edit?_id=${result._id}`
                     })
             })
     }

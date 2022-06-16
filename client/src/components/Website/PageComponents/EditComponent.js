@@ -2,19 +2,19 @@ import React from "react"
 
 import ComponentDAO from "../../../DAOs/ComponentDAO"
 import ComponentDTO from "../../../DTOs/ComponentDTO"
+import CustomComponent from "./CustomComponent";
 
 import CustomFocusser from "./CustomFocusser"
 import LayoutsMenu from "./LayoutsMenu";
 import OptionsMenu from "./OptionsMenu";
 
-export default class EditComponent extends React.Component {
+export default class EditComponent extends CustomComponent {
     constructor(props, options = {}) {
-        super(props);
-        this.state = {
+        super(props,{
             focus: false,
             filter:false,
             children: []
-        }
+        });
         this.options = {
             directContact: true,
             ...options
@@ -61,18 +61,6 @@ export default class EditComponent extends React.Component {
             })
     }
 
-    componentDidMount() {
-        ComponentDAO.select()
-            .then((result) => {
-                return result.filter(c => c.parentId == this.props.component._id)
-            })
-            .then((result) => {
-                this.setState({
-                    children: result
-                })
-            })
-    }
-
     onFilter(on){
         debugger;
         this.setState({
@@ -115,7 +103,7 @@ export default class EditComponent extends React.Component {
                     onFocus={(e) => {
                         EditComponent.selected = this;
                         this.onSelect()
-                        this.onFilter(false)
+                        //this.onFilter(false)
                     }}
                     onBlur={(e) => {
                         this.onDeselect()
