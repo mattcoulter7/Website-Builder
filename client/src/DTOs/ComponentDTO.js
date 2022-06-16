@@ -1,42 +1,44 @@
 import DTO from "./DTO";
 
 export default class ComponentDTO extends DTO {
-    #pageId;
+    #parentId;
     #type;
-    #title;
-    #body;
-    #imageUrl;
+    #value;
+    #src;
+    #children;
     constructor(obj){
         super(obj);
-        this.#pageId = obj.pageId;
+        this.#parentId = obj.parentId;
         this.#type = obj.type;
-        this.#title = obj.title;
-        this.#body = obj.body;
-        this.#imageUrl = obj.imageUrl;
+        this.#value = obj.value;
+        this.#src = obj.src;
+        this.#children = []; // needs to be fetched in manually
     }
-    get pageId(){
-        return this.#pageId;
+    get parentId(){
+        return this.#parentId;
     }
     get type(){
         return this.#type;
     }
-    get title(){
-        return this.#title;
+    get value(){
+        return this.#value;
     }
-    get body(){
-        return this.#body;
+    get src(){
+        return this.#src;
     }
-    get imageUrl(){
-        return this.#imageUrl;
+    get children(){
+        return this.#children;
+    }
+    set children(value){
+        this.#children = value;
     }
     toJSON() { // override this
         return {
             _id:this._id,
-            pageId:this.pageId,
+            parentId:this.parentId,
             type:this.type,
-            title:this.title,
-            body:this.body,
-            imageUrl:this.imageUrl
+            value:this.value,
+            src:this.src
         }
     }
 }

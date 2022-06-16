@@ -6,7 +6,7 @@ import { RiDeleteBin6Fill } from 'react-icons/ri'
 import ComponentDAO from '../../../DAOs/ComponentDAO';
 import ComponentDTO from '../../../DTOs/ComponentDTO';
 
-import { Preview } from './ComponentMapping'
+import ComponentMapping from './ComponentMapping'
 
 const LayoutsMenu = ({
     component,
@@ -17,7 +17,6 @@ const LayoutsMenu = ({
     }
 
     const changeType = (compType) => {
-        debugger
         let values = compType._DefaultComponentValues();
         ComponentDAO.update(new ComponentDTO({
             ...values,
@@ -26,17 +25,19 @@ const LayoutsMenu = ({
         }));
     }
 
-    const buttons = Object.entries(Preview).map(pair => 
+    const buttons = Object.entries(ComponentMapping).map(pair => 
         <button
             className="btn btn-primary btn-sm m-1"
-            onClick={() => changeType(pair[1])}
+            onClick={() => {
+                pair[1].update(component)
+            }}
         >
             {pair[0]}
         </button>
     )
 
     return (
-        <div class={`shadow-sm p-3 bg-white rounded ${className}`}>
+        <div className={`shadow-sm p-3 bg-white rounded ${className}`}>
             {buttons}
         </div>
     )

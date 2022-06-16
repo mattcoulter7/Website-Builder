@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Navigate, parsePath, useParams } from 'react-router-dom';
 import { loremIpsum } from 'react-lorem-ipsum';
 
@@ -11,14 +11,14 @@ import WebsiteDAO from "../DAOs/WebsiteDAO"
 
 import Page from '../layouts/Page';
 
-import EditableComponent from "../components/Website/PageComponents/EditableComponent"
 import NewLine from "../components/Website/PageComponents/NewLine"
 import CustomFocusser from "../components/Website/PageComponents/CustomFocusser"
+import ComponentMapping from "../components/Website/PageComponents/ComponentMapping"
 
-import TitleBody1 from "../components/Website/PageComponents/TitleBody1"
+import Section from "../components/Website/PageComponents/Layouts/Section"
 
 const onDeselect = () => {
-    EditableComponent.active && EditableComponent.active.setState({
+    Section.active && Section.active.setState({
         focus: false
     })
 }
@@ -39,9 +39,14 @@ export default () => {
         ComponentDAO
             .select()
             .then((components) => {
-                return components.filter(p => p.pageId == _id)
+                // store the children components
+                components.forEach((c1, i, self) => c1.children = self.filter(c2 => c2.parentId == c1._id))
+
+                // extract components specific to the page
+                return components.filter(c => c.parentId == _id)
             })
             .then((components) => {
+                // store against state
                 setComponents(components)
             })
 
@@ -49,12 +54,12 @@ export default () => {
             .selectId(_id)
             .then((page) => {
                 setPage(page);
-                
+
                 WebsiteDAO
                     .selectId(page.websiteId)
                     .then((website) => {
                         setWebsite(website);
-                        
+
                         PageDAO
                             .select()
                             .then((pages) => {
@@ -67,25 +72,22 @@ export default () => {
             })
     });
 
-    const onNewComponent = () => {
-        ComponentDAO
-            .insert(new ComponentDTO({
-                ...TitleBody1._DefaultComponentValues(),
-                pageId: _id
-            }))
-    }
-
     return (
         <Page>
             <CustomFocusser
                 onBlur={onDeselect}>
-                {components.map(comp => (
-                    <>
-                        <NewLine onNew={() => onNewComponent()}></NewLine>
-                        <EditableComponent website={website} page={page} pages={pages} component={comp} />
-                    </>
-                ))}
-                <NewLine onNew={() => onNewComponent()}></NewLine>
+                {
+                    components
+                        .filter(c => c.type == "Section")
+                        .map(comp => {
+                            const CustomComponent = ComponentMapping[comp.type]
+                            return (<>
+                                <NewLine onNew={() => ComponentMapping.Section.create(page._id)}></NewLine>
+                                <CustomComponent.edit website={website} page={page} pages={pages} component={comp} parentState={{}} />
+                            </>)
+                        })
+                }
+                <NewLine onNew={() => ComponentMapping.Section.create(page._id)}></NewLine>
             </CustomFocusser>
         </Page>
     );

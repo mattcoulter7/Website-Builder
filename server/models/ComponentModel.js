@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const ObjectId = require('mongoose/lib/types/objectid');
 
 const componentSchema = new mongoose.Schema({
-    pageId: {
+    parentId: { // can be a page or another element...
         type: ObjectId,
         required: true
     },
@@ -10,15 +10,12 @@ const componentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    title:{
+    value:{
         type: String
     },
-    body:{
-        type: String
-    },
-    imageUrl:{
+    src:{
         type: String
     }
 })
 
-module.exports = mongoose.model('Component', componentSchema)
+module.exports = mongoose.model('Component', componentSchema) 

@@ -2,4 +2,8 @@ import DAO from "./DAO";
 
 import PageDTO from "../DTOs/PageDTO"
 
-export default new DAO('page',PageDTO)
+const pageDAO = new DAO('page',PageDTO);
+
+Window.pageDAO = pageDAO;
+
+export default pageDAO;

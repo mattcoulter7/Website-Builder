@@ -24,7 +24,7 @@ export default class blah extends React.Component {
     }
     render() {
         return (
-            <form>
+            <>
                 <div className="col-md-4 mb-3">
                     <label htmlFor="companyName">Company Name</label>
                     <input id="companyName" type="text" required value={this.state.companyName} className="form-control" onChange={(e) => {
@@ -34,7 +34,7 @@ export default class blah extends React.Component {
                     }} />
                 </div>
                 <button className="btn btn-primary" onClick={() => this.onFormSubmit()}>Create Website!</button>
-            </form>
+            </>
         );
     }
 }

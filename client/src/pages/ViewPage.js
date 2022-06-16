@@ -24,7 +24,7 @@ export default () => {
         ComponentDAO
             .select()
             .then((components) => {
-                return components.filter(p => p.pageId == _id)
+                return components.filter(p => p.parentId == _id)
             })
             .then((components) => {
                 setComponents(components)

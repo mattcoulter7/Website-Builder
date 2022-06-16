@@ -2,4 +2,9 @@ import DAO from "./DAO";
 
 import ComponentDTO from "../DTOs/ComponentDTO"
 
-export default new DAO('component',ComponentDTO)
+
+const componentDAO = new DAO('component',ComponentDTO);
+
+Window.componentDAO = componentDAO;
+
+export default componentDAO;

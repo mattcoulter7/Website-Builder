@@ -2,4 +2,8 @@ import DAO from "./DAO";
 
 import WebsiteDTO from "../DTOs/WebsiteDTO"
 
-export default new DAO('website',WebsiteDTO)
+const websiteDAO = new DAO('website',WebsiteDTO);
+
+Window.websiteDAO = websiteDAO;
+
+export default websiteDAO;

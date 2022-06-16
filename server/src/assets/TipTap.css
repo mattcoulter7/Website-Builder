@@ -49,13 +49,16 @@
 
 .visible-fade {
     opacity: 100;
-    transition: all 250ms ease-in-out 0.5s;
+    max-height: 1000px;
+    transition: max-height 200ms ease-in-out,opacity 100ms ease-in-out 0.1s;
+    overflow: hidden;
 }
 
 .invisible-fade {
     opacity: 0;
-    transition: all 250ms ease-in-out 0.5s;
-    display: none
+    max-height: 0px;
+    transition: max-height 200ms ease-in-out,opacity 100ms ease-in-out 0.1s;
+    overflow: hidden;
 }
 
 .deselected {

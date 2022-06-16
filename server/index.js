@@ -9,6 +9,8 @@ const cors = require('cors');
 const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
 
+const queryRouter = require('./routers/query');
+const userRouter = require('./routers/user');
 
 const app = express();
 
@@ -28,8 +30,6 @@ app.use(bodyParser.urlencoded({
 app.use(methodOverride('_method'))
 app.use(cookieParser());
 
-const queryRouter = require('./routers/query');
-const userRouter = require('./routers/user');
 const fileRouter = require('./routers/file');
 
 app.use('/file', fileRouter);

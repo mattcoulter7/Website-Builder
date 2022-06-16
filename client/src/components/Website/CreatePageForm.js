@@ -6,6 +6,8 @@ import { Navigate } from 'react-router-dom';
 import PageDAO from "../../DAOs/PageDAO"
 import PageDTO from "../../DTOs/PageDTO"
 
+import ComponentMapping from "./PageComponents/ComponentMapping";
+
 export default class blah extends React.Component {
     constructor(props){
         super(props);
@@ -20,12 +22,15 @@ export default class blah extends React.Component {
                 websiteId: this.props.websiteId
             }))
             .then((result) => {
-                window.location.href = `/website/edit/${this.props.websiteId}`
+                ComponentMapping.Section.create(result._id)
+                    .then(() => {
+                        window.location.href = `/page/edit/${result._id}`
+                    })
             })
     }
     render() {
         return (
-            <form>
+            <>
                 <div className="col-md-4 mb-3">
                     <label htmlFor="companyName">Page Name</label>
                     <input id="companyName" type="text" required value={this.state.name} className="form-control" onChange={(e) => {
@@ -34,8 +39,8 @@ export default class blah extends React.Component {
                         })
                     }} />
                 </div>
-                <button className="btn btn-primary" onClick={() => this.onFormSubmit()}>Create Page!</button>
-            </form>
+                <button type="submit" className="btn btn-primary" onClick={() => this.onFormSubmit()}>Create Page!</button>
+            </>
         );
     }
 }

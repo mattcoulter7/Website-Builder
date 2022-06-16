@@ -44,7 +44,7 @@ const OptionsMenu = ({
     );
 
     return (
-        <div class={`shadow-sm p-3 bg-white rounded ${className}`}>
+        <div className={`shadow-sm p-3 bg-white rounded ${className}`}>
             {buttons}
         </div>
     )
