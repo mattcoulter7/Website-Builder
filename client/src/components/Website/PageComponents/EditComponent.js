@@ -9,11 +9,12 @@ import LayoutsMenu from "./LayoutsMenu";
 import OptionsMenu from "./OptionsMenu";
 
 export default class EditComponent extends CustomComponent {
-    constructor(props, options = {}) {
+    constructor(props, options = {},state = {}) {
         super(props,{
             focus: false,
             filter:false,
-            children: []
+            children: [],
+            ...state
         });
         this.options = {
             directContact: true,

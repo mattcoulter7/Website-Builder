@@ -14,6 +14,8 @@ import Section_EDIT from "./Layouts/Section_EDIT"
 import Section from "./Layouts/Section"
 import Container_EDIT from "./Layouts/Container_EDIT"
 import Container from "./Layouts/Container"
+import IFrame1_EDIT from "./IFrame/IFrame1_EDIT"
+import IFrame1 from "./IFrame/IFrame1"
 
 import ComponentDAO from "../../../DAOs/ComponentDAO"
 import ComponentDTO from "../../../DTOs/ComponentDTO"
@@ -58,11 +60,11 @@ const componentMappings = {
         return ComponentDAO.insert(new ComponentDTO({
             parentId: parentId,
             type: "Photo1",
-            src:"https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg"
+            src: "https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg"
         }))
     }, (comp) => {
         return ComponentDAO.update(new ComponentDTO({
-            src:"https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg",
+            src: "https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg",
             ...comp.toFilteredJSON(),
             type: "Photo1"
         }))
@@ -71,13 +73,13 @@ const componentMappings = {
         return ComponentDAO.insert(new ComponentDTO({
             parentId: parentId,
             type: "CarouselItem1",
-            src:"https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg",
-            value:"<h3>Image Title</h3><p>Image Caption</p>"
+            src: "https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg",
+            value: "<h3>Image Title</h3><p>Image Caption</p>"
         }))
     }, (comp) => {
         return ComponentDAO.update(new ComponentDTO({
-            src:"https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg",
-            value:"<h3>Image Title</h3><p>Image Caption</p>",
+            src: "https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg",
+            value: "<h3>Image Title</h3><p>Image Caption</p>",
             ...comp.toFilteredJSON(),
             type: "CarouselItem1"
         }))
@@ -139,6 +141,18 @@ const componentMappings = {
         return ComponentDAO.update(new ComponentDTO({
             ...comp.toFilteredJSON(),
             type: "Container"
+        }))
+    }),
+    'IFrame1': new ComponentMap(IFrame1, IFrame1_EDIT, (parentId) => {
+        return ComponentDAO
+            .insert(new ComponentDTO({
+                parentId: parentId,
+                type: "IFrame1"
+            }))
+    }, (comp) => {
+        return ComponentDAO.update(new ComponentDTO({
+            ...comp.toFilteredJSON(),
+            type: "IFrame1"
         }))
     })
 }

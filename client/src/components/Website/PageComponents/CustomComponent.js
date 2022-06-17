@@ -8,7 +8,7 @@ import LayoutsMenu from "./LayoutsMenu";
 import OptionsMenu from "./OptionsMenu";
 
 export default class CustomComponent extends React.Component {
-    constructor(props, state={},options = {}) {
+    constructor(props, state={}) {
         super(props);
         this.state = {
             ...state,
