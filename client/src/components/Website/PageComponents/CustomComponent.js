@@ -8,6 +8,7 @@ export default class CustomComponent extends React.Component {
         this.state = {
             ...state,
             children: [],
+            ...this.props.component.toJSON()
         }
     }
 

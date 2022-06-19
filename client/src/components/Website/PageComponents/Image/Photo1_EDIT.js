@@ -10,7 +10,7 @@ export default class Photo1_Edit extends EditComponent {
     render() {
         return super.render(
             <>
-                <img src={this.props.component.src} className="img-fluid" alt="Responsive image" />
+                <img src={this.state.src} className="img-fluid" alt="Responsive image" />
                 {
                     (() => {
                         return this.state.focus ? <input className="form-control" id="formFileLg" type="file" onChange={(e) => {

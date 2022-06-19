@@ -29,13 +29,13 @@ export default class IFrame1_Edit extends EditComponent {
         return super.render(
             <>
                 <div className="embed-responsive embed-responsive-16by9">
-                    <iframe className="embed-responsive-item" ref={this.iframeRef} src={this.props.component.src} title="YouTube video player" style={{
+                    <iframe className="embed-responsive-item" ref={this.iframeRef} src={this.state.src} title="YouTube video player" style={{
                         width: "100%"
                     }} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen={true}></iframe>
                 </div>
                 {
                     (() => {
-                        return this.state.focus ? <input className="form-control" type="text" value={this.props.component.src} onChange={(e) => {
+                        return this.state.focus ? <input className="form-control" type="text" value={this.state.src} onChange={(e) => {
                             this.save({ src: e.target.value })
                         }} /> : null
                     })()

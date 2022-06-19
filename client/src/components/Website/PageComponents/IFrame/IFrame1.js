@@ -28,7 +28,7 @@ export default class IFrame1 extends CustomComponent {
     render() {
         return (
             <div className="embed-responsive embed-responsive-16by9">
-                <iframe className="embed-responsive-item" ref={this.iframeRef} src={this.props.component.src} title="YouTube video player" style={{
+                <iframe className="embed-responsive-item" ref={this.iframeRef} src={this.state.src} title="YouTube video player" style={{
                     width: "100%"
                 }} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen={true}></iframe>
             </div>

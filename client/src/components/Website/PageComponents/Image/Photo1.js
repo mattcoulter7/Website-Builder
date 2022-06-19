@@ -10,7 +10,7 @@ import CustomComponent from "../CustomComponent";
 export default class Photo1_Edit extends CustomComponent {
     render() {
         return (
-            <img src={this.props.component.src} className="img-fluid" alt="Responsive image" />
+            <img src={this.state.src} className="img-fluid" alt="Responsive image" />
         );
     }
 }

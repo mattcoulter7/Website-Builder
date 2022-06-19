@@ -37,7 +37,7 @@ class LayoutsMenu extends React.Component {
                                     height: "20rem",
                                     overflowY: "scroll"
                                 }}>
-                                    {tab.content}
+                                    {tab.content.map(c => c())}
                                     {tab.sections.map((section, i) => (
                                         <Accordion.Item eventKey={`${i}`} >
                                             <Accordion.Header>{section.name}</Accordion.Header>
@@ -45,7 +45,7 @@ class LayoutsMenu extends React.Component {
                                                 maxHeight: "20rem",
                                                 overflowY: "scroll"
                                             }}>
-                                                {section.content}
+                                                {section.content.map(c => c())}
                                             </Accordion.Body>
                                         </Accordion.Item>
                                     ))}

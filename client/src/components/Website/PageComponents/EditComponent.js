@@ -10,6 +10,7 @@ import LayoutsMenu from "./LayoutsMenu";
 import OptionsMenu from "./OptionsMenu";
 
 import FunctionDoesSomething from '../../../Utils/FunctionDoesSomething'
+import ComponentMapping from "./ComponentMapping";
 
 export default class EditComponent extends IFocusable {
     constructor(props, state = {}) {
@@ -29,7 +30,14 @@ export default class EditComponent extends IFocusable {
     }
 
     initializeTabs() {
-        this.addTabContent("Layout", <div>test</div>)
+        this.addTabContent("Content", () =>
+            Object.entries(ComponentMapping).map(entry => <button className="btn btn-primary m-1" onClick={(e) => {
+                ComponentMapping[entry[0]].update(this.props.component)
+                    .then((result) => {
+                        this.props.parentContext().whenUpdate(result)
+                    })
+            }}>{entry[0]}</button>)
+            ,"Change Type")
     }
 
     addTabContent(tabName, content, sectionName = "") {
