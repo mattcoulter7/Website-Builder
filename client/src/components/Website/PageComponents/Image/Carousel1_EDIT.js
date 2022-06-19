@@ -13,11 +13,6 @@ import ComponentDAO from "../../../../DAOs/ComponentDAO";
 import ComponentDTO from "../../../../DTOs/ComponentDTO";
 
 export default class Carousel1_EDIT extends EditComponent {
-    constructor(props) {
-        super(props, {
-            directContact: false
-        })
-    }
     onClickNew() {
         ComponentMapping.CarouselItem1.create(this.props.component._id)
             .then((result) => {

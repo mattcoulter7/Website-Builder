@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class CustomFocusser extends React.Component {
+export default class IFocusable extends React.Component {
     constructor(props) {
         super(props);
         this.wrapperRef = React.createRef();

@@ -6,7 +6,7 @@ import TextAlign from '@tiptap/extension-text-align'
 
 import TipTapMenuBar from "./TipTapMenuBar"
 
-import CustomFocusser from './CustomFocusser'
+import IFocusable from './IFocusable'
 
 const TipTap = ({ value, onChange }) => {
     const [focus, setFocus] = useState(false);
@@ -24,7 +24,7 @@ const TipTap = ({ value, onChange }) => {
     })
 
     return (
-        <CustomFocusser
+        <IFocusable
             mousedownonFocusDirect={(e) => {
                 setFocus(true)
             }}
@@ -33,7 +33,7 @@ const TipTap = ({ value, onChange }) => {
             }}>
             <TipTapMenuBar visible={focus} editor={editor} />
             <EditorContent editor={editor} />
-        </CustomFocusser>
+        </IFocusable>
     )
 }
 

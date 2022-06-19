@@ -5,17 +5,14 @@ import { TelephoneMinus } from "react-bootstrap-icons";
 import ComponentDAO from "../../../DAOs/ComponentDAO"
 import ComponentDTO from "../../../DTOs/ComponentDTO"
 
-import CustomFocusser from "./CustomFocusser"
+import IFocusable from "./IFocusable"
 import LayoutsMenu from "./LayoutsMenu";
 import OptionsMenu from "./OptionsMenu";
 
-export default class EditComponent extends CustomFocusser {
-    constructor(props, options = {}, state = {}) {
+export default class EditComponent extends IFocusable {
+    constructor(props, state = {}) {
         super(props);
-        this.options = {
-            directContact: true,
-            ...options
-        }
+        this.tabs = [];
         this.state = {
             focus: false,
             filter: false,
@@ -25,6 +22,33 @@ export default class EditComponent extends CustomFocusser {
         }
 
         this.handler = this.handler.bind(this)
+
+        this.addTabContent("Layout", <div>test</div>)
+    }
+
+    addTabContent(tabName, content, sectionName = "") {
+        this.tabs[tabName] = this.tabs[tabName] || {
+            name: tabName,
+            content: [],
+            sections: {}
+        };
+
+        if (sectionName) {
+            this.tabs[tabName].sections[sectionName] = this.tabs[tabName].sections[sectionName] || {
+                name: sectionName,
+                content: []
+            }
+            this.tabs[tabName].sections[sectionName].content.push(content)
+        } else {
+            this.tabs[tabName].content.push(content);
+        }
+    }
+
+    get preparedTabs() {
+        return Object.values(this.tabs).map(tab => ({
+            ...tab,
+            sections: Object.values(tab.sections)
+        }))
     }
 
     handler() {
@@ -133,7 +157,6 @@ export default class EditComponent extends CustomFocusser {
         }
 
         return super.render(
-
             <div className={className}>
                 {this.props.component.type}
                 {
@@ -146,7 +169,7 @@ export default class EditComponent extends CustomFocusser {
                 {
                     (() => {
                         return this.state.showMajorMenu ?
-                            <LayoutsMenu component={this.props.component} parentContext={this.handler} /> : null
+                            <LayoutsMenu tabs={this.preparedTabs} component={this.props.component} parentContext={this.handler} /> : null
                     })()
                 }
             </div>

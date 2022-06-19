@@ -9,6 +9,9 @@ import EditComponent from "../EditComponent";
 export default class Text1_EDIT extends EditComponent {
     constructor(props){
         super(props)
+        
+        this.addTabContent("Content",<input className="form-control" value={props.component.value}/>,"Section 1")
+        this.addTabContent("Content",<input className="form-control" value={props.component.value}/>)
     }
     mousedownonBlurDirect(e) {}
     mousedownonFocus(e) {
@@ -16,6 +19,9 @@ export default class Text1_EDIT extends EditComponent {
     }
     mousemoveonFocus(){
         this.onFilter(true);
+    }
+    componentDidMount(){
+        super.componentDidMount();
     }
     render() {
         return super.render(

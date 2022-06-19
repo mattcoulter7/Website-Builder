@@ -12,7 +12,7 @@ import WebsiteDAO from "../DAOs/WebsiteDAO"
 import Page from '../layouts/Page';
 
 import NewLine from "../components/Website/PageComponents/NewLine"
-import CustomFocusser from "../components/Website/PageComponents/CustomFocusser"
+import IFocusable from "../components/Website/PageComponents/IFocusable"
 import ComponentMapping from "../components/Website/PageComponents/ComponentMapping"
 
 import Section from "../components/Website/PageComponents/Layouts/Section"
@@ -22,7 +22,7 @@ import { params } from "../Utils/QueryString"
 import Panel from '../components/Website/EditWebsite/Panel';
 
 
-export default class EditPage extends CustomFocusser {
+export default class EditPage extends IFocusable {
     constructor(props) {
         super(props);
         this.state = {

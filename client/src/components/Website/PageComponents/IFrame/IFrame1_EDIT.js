@@ -8,7 +8,7 @@ import EditComponent from "../EditComponent";
 
 export default class IFrame1_Edit extends EditComponent {
     constructor(props) {
-        super(props, {}, {
+        super(props, {
             height: 0
         })
         this.iframeRef = React.createRef(this);
