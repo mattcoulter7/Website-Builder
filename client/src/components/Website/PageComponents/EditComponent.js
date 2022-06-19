@@ -9,43 +9,49 @@ import IFocusable from "./IFocusable"
 import LayoutsMenu from "./LayoutsMenu";
 import OptionsMenu from "./OptionsMenu";
 
+import FunctionDoesSomething from '../../../Utils/FunctionDoesSomething'
+
 export default class EditComponent extends IFocusable {
     constructor(props, state = {}) {
         super(props);
-        this.tabs = [];
         this.state = {
             focus: false,
             filter: false,
             children: [],
             showMajorMenu: false,
-            ...state
+            tabs: [],
+            ...state,
+            ...this.props.component.toJSON()
         }
 
         this.handler = this.handler.bind(this)
+        this.initializeTabs();
+    }
 
+    initializeTabs() {
         this.addTabContent("Layout", <div>test</div>)
     }
 
     addTabContent(tabName, content, sectionName = "") {
-        this.tabs[tabName] = this.tabs[tabName] || {
+        this.state.tabs[tabName] = this.state.tabs[tabName] || {
             name: tabName,
             content: [],
             sections: {}
         };
 
         if (sectionName) {
-            this.tabs[tabName].sections[sectionName] = this.tabs[tabName].sections[sectionName] || {
+            this.state.tabs[tabName].sections[sectionName] = this.state.tabs[tabName].sections[sectionName] || {
                 name: sectionName,
                 content: []
             }
-            this.tabs[tabName].sections[sectionName].content.push(content)
+            this.state.tabs[tabName].sections[sectionName].content.push(content)
         } else {
-            this.tabs[tabName].content.push(content);
+            this.state.tabs[tabName].content.push(content);
         }
     }
 
     get preparedTabs() {
-        return Object.values(this.tabs).map(tab => ({
+        return Object.values(this.state.tabs).map(tab => ({
             ...tab,
             sections: Object.values(tab.sections)
         }))
@@ -72,21 +78,21 @@ export default class EditComponent extends IFocusable {
     }
 
     // when a child component has been removed
-    onDelete(child) {
+    whenDelete(child) {
         this.setState({
             children: this.state.children.filter(c => c != child)
         })
     }
 
     // when a child component has been added
-    onInsert(child) {
+    whenInsert(child) {
         this.setState({
             children: this.state.children.concat(child)
         })
     }
 
     // this component has been updated, should cause rerender
-    onUpdate(child) {
+    whenUpdate(child) {
         let children = this.state.children;
         children[children.findIndex((c) => c._id == child._id)] = child;
         this.setState({
@@ -95,13 +101,23 @@ export default class EditComponent extends IFocusable {
     }
 
     save(values = {}) {
+        this.setState(values)
         ComponentDAO
             .update(new ComponentDTO({
                 ...this.props.component.toJSON(),
                 ...values
             }))
             .then(result => {
-                this.props.parentContext().onUpdate(result);
+                console.log(result)
+            })
+    }
+    onNew() { }
+    onDelete() {
+        this.props.parentContext().whenDelete(this.props.component)
+        ComponentDAO
+            .delete(this.props.component._id)
+            .then(result => {
+                console.log(result)
             })
     }
 
@@ -115,12 +131,6 @@ export default class EditComponent extends IFocusable {
         this.setState({
             focus: on,
             showMajorMenu: on ? this.state.showMajorMenu : false
-        })
-    }
-
-    onClickEdit() {
-        this.setState({
-            showMajorMenu: true
         })
     }
 
@@ -145,7 +155,7 @@ export default class EditComponent extends IFocusable {
         this.onSelect(false)
     }
 
-    render(children) {
+    render(children, tabs) {
         var className = "";
         if (this.state.focus) {
             className += " selected"
@@ -162,14 +172,35 @@ export default class EditComponent extends IFocusable {
                 {
                     (() => {
                         return this.state.focus ?
-                            <OptionsMenu component={this.props.component} up={false} down={false} parentContext={this.handler} /> : null
+                            <OptionsMenu
+                                onDelete={() => {
+                                    this.onDelete()
+                                }}
+                                onEdit={() => {
+                                    this.setState({
+                                        showMajorMenu: true
+                                    })
+                                }}
+                                onAdd={FunctionDoesSomething(this.onNew) ? () => {
+                                    this.onNew()
+                                } : null}
+                                onUp={() => {
+
+                                }}
+                                onDown={() => {
+
+                                }} /> : null
                     })()
                 }
                 {children}
                 {
                     (() => {
                         return this.state.showMajorMenu ?
-                            <LayoutsMenu tabs={this.preparedTabs} component={this.props.component} parentContext={this.handler} /> : null
+                            <LayoutsMenu tabs={this.preparedTabs} component={this.props.component} onClose={() => {
+                                this.setState({
+                                    showMajorMenu: false
+                                })
+                            }} /> : null
                     })()
                 }
             </div>

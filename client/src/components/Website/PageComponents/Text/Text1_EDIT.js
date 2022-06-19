@@ -7,27 +7,30 @@ import EditComponent from "../EditComponent";
 
 
 export default class Text1_EDIT extends EditComponent {
-    constructor(props){
-        super(props)
-        
-        this.addTabContent("Content",<input className="form-control" value={props.component.value}/>,"Section 1")
-        this.addTabContent("Content",<input className="form-control" value={props.component.value}/>)
+    initializeTabs() {
     }
-    mousedownonBlurDirect(e) {}
+    mousedownonBlurDirect(e) { }
     mousedownonFocus(e) {
         this.onSelect(true)
     }
-    mousemoveonFocus(){
+    mousemoveonFocus() {
         this.onFilter(true);
     }
-    componentDidMount(){
+    componentDidMount() {
         super.componentDidMount();
     }
     render() {
+        this.addTabContent("Content", <input className="form-control" onChange={(e) => {
+            this.save({
+                value: e.target.value
+            })
+        }} value={this.state.value} />)
         return super.render(
-            <TipTap value={this.props.component.value} onChange={(e) => {
-                this.save({ value: e.editor.getHTML() })
-            }} />
+            <>
+                <TipTap value={this.props.component.value} onChange={(e) => {
+                    this.save({ value: e.editor.getHTML() })
+                }} />
+            </>
         )
     }
 }

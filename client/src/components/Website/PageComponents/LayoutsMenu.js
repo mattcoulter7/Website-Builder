@@ -17,37 +17,13 @@ class LayoutsMenu extends React.Component {
         this.wrapperRef = React.createRef();
     }
     render() {
-        if (!this.props.component) return;
-
-        const buttons = Object.entries(ComponentMapping).map(pair =>
-            <button
-                className="btn btn-primary btn-sm m-1"
-                onClick={() => {
-                    pair[1].update(this.props.component)
-                        .then((result) => {
-                            let thisComponent = this.props.parentContext();
-                            let thisComponentContainer = thisComponent.props.parentContext();
-                            if (thisComponentContainer) {
-                                thisComponentContainer.onUpdate(result)
-                            }
-                        })
-                }}
-            >
-                {pair[0]}
-            </button>
-        )
         return (
             <div ref={this.wrapperRef} class="card shadow-sm bg-white rounded" style={{
                 width: "20rem",
-                position:"fixed",
-                top:"50%",
-                right:"30rem"
+                position: "fixed",
+                zIndex: 10000
             }}>
-                <button type="button" class="btn-close" aria-label="Close" onClick={() => {
-                    this.props.parentContext().setState({
-                        showMajorMenu: false
-                    })
-                }}></button>
+                <button type="button" class="btn-close" aria-label="Close" onClick={this.props.onClose}></button>
                 <IMoveable dragElement={this.wrapperRef} />
                 <Tabs
                     defaultActiveKey="0"

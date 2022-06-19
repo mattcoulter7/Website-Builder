@@ -2,72 +2,52 @@ import React from 'react'
 
 import { FaArrowUp, FaArrowDown } from 'react-icons/fa'
 import { RiDeleteBin6Fill } from 'react-icons/ri'
-import { AiFillPlusCircle,AiFillEdit } from 'react-icons/ai'
-
-import ComponentDAO from '../../../DAOs/ComponentDAO';
-import ComponentDTO from '../../../DTOs/ComponentDTO';
+import { AiFillPlusCircle, AiFillEdit } from 'react-icons/ai'
 
 const OptionsMenu = ({
-    destroy = true,
-    up = true,
-    down = true,
-    add = true,
-    edit = true,
-    component,
-    className,
-    parentContext
+    onDelete,
+    onUp,
+    onDown,
+    onAdd,
+    onEdit
 }) => {
-    if (!component) {
-        return null;
-    }
-
     var buttons = [];
-    destroy && buttons.push(
+    onDelete && buttons.push(
         <button
             className="btn btn-primary btn-sm m-1"
-            onClick={() => {
-                ComponentDAO
-                    .delete(component._id)
-                    .then((result) => {
-                        let thisComponent = parentContext();
-                        let thisComponentContainer = thisComponent.props.parentContext();
-                        if (thisComponentContainer) {
-                            thisComponentContainer.onDelete(component)
-                        }
-                    })
-            }}
+            onClick={onDelete}
         >
             <RiDeleteBin6Fill />
         </button>
     )
-    up && buttons.push(
+    onUp && buttons.push(
         <button
             className="btn btn-primary btn-sm m-1"
-            onClick={() => { }}
+            onClick={onUp}
         >
             <FaArrowUp />
         </button>
     );
-    down && buttons.push(
+    onDown && buttons.push(
         <button
             className="btn btn-primary btn-sm m-1"
-            onClick={() => { }}
+            onClick={onDown}
         >
             <FaArrowDown />
         </button>
     );
-    add && parentContext().onClickNew && buttons.push(
+    onAdd && buttons.push(
         <button
             className="btn btn-primary btn-sm m-1"
-            onClick={() => parentContext().onClickNew()}
+            onClick={onAdd}
         >
             <AiFillPlusCircle />
         </button>
     );
-    edit && parentContext().onClickEdit && buttons.push(
+    onEdit && buttons.push(
         <button
             className="btn btn-primary btn-sm m-1"
-            onClick={() => parentContext().onClickEdit()}
+            onClick={onEdit}
         >
             <AiFillEdit />
         </button>
@@ -81,7 +61,7 @@ const OptionsMenu = ({
                 zIndex: '900000',
                 transform: 'translateY(-100px)',
                 width: 'max-content'
-            }} className={`shadow-sm p-3 bg-white rounded ${className}`}>
+            }} className={`shadow-sm p-3 bg-white rounded`}>
             {buttons}
         </div>
     )

@@ -3,10 +3,6 @@ import React from "react";
 import ComponentMapping from "./ComponentMapping";
 
 export default class PreviewComponent extends React.Component {
-    constructor(props) {
-        super(props)
-    }
-
     render() {
         var CustomComponent = ComponentMapping[this.props.component.type];
         if (!CustomComponent) return (<></>);

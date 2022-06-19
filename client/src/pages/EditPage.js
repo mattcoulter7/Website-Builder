@@ -43,7 +43,7 @@ export default class EditPage extends IFocusable {
     handler() {
         return this;
     }
-    onDelete(child) {
+    whenDelete(child) {
         this.setState({
             children: this.state.children.filter(c => c != child)
         })
@@ -99,7 +99,7 @@ export default class EditPage extends IFocusable {
         })
     }
 
-    onNewSection() {
+    onNew() {
         ComponentMapping.Section.create(this._id)
             .then((result) => {
                 this.setState({
@@ -121,12 +121,12 @@ export default class EditPage extends IFocusable {
                         .map(comp => {
                             const CustomComponent = ComponentMapping[comp.type]
                             return (<>
-                                <NewLine onNew={() => this.onNewSection()}></NewLine>
-                                <CustomComponent.edit website={this.state.website} page={this.state.page} pages={this.state.pages} component={comp} parentContext={this.handler} />
+                                <NewLine onNew={() => this.onNew()}></NewLine>
+                                <CustomComponent.edit website={this.state.website} page={this.state.page} pages={this.state.pages} component={comp} parentContext={this.handler}/>
                             </>)
                         })
                 }
-                <NewLine onNew={() => this.onNewSection()}></NewLine>
+                <NewLine onNew={() => this.onNew()}></NewLine>
             </Page >
         );
     }

@@ -13,10 +13,10 @@ import ComponentDAO from "../../../../DAOs/ComponentDAO";
 import ComponentDTO from "../../../../DTOs/ComponentDTO";
 
 export default class Carousel1_EDIT extends EditComponent {
-    onClickNew() {
+    onNew() {
         ComponentMapping.CarouselItem1.create(this.props.component._id)
             .then((result) => {
-                this.onInsert(result)
+                this.whenInsert(result)
             })
     }
     render() {
@@ -44,7 +44,7 @@ export default class Carousel1_EDIT extends EditComponent {
                                                     src: result
                                                 }))
                                                 .then(result => {
-                                                    this.onUpdate(result);
+                                                    this.whenUpdate(result);
                                                 })
                                         })
                                 }} />
@@ -56,7 +56,7 @@ export default class Carousel1_EDIT extends EditComponent {
                                                 value: e.editor.getHTML()
                                             }))
                                             .then(result => {
-                                                this.onUpdate(result);
+                                                this.whenUpdate(result);
                                             })
                                     }} />
                                 </Carousel.Caption>
