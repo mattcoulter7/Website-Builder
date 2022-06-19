@@ -14,6 +14,9 @@ export default class Text1_EDIT extends EditComponent {
     mousedownonFocus(e) {
         this.onSelect(true)
     }
+    mousemoveonFocus(){
+        this.onFilter(true);
+    }
     render() {
         return super.render(
             <TipTap value={this.props.component.value} onChange={(e) => {

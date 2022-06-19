@@ -17,7 +17,7 @@ const LayoutsMenu = ({
         return null;
     }
 
-    const buttons = Object.entries(ComponentMapping).map(pair => 
+    const buttons = Object.entries(ComponentMapping).map(pair =>
         <button
             className="btn btn-primary btn-sm m-1"
             onClick={() => {
@@ -25,7 +25,7 @@ const LayoutsMenu = ({
                     .then((result) => {
                         let thisComponent = parentContext();
                         let thisComponentContainer = thisComponent.props.parentContext();
-                        if (thisComponentContainer){
+                        if (thisComponentContainer) {
                             thisComponentContainer.onUpdate(result)
                         }
                     })
@@ -36,7 +36,14 @@ const LayoutsMenu = ({
     )
 
     return (
-        <div className={`shadow-sm p-3 bg-white rounded ${className}`}>
+        <div
+            style={{
+                position: 'fixed',
+                zIndex: '900000',
+                right: '100px',
+                top: '50%',
+                width: 'max-content'
+            }} className={`shadow-sm p-3 bg-white rounded ${className}`}>
             {buttons}
         </div>
     )

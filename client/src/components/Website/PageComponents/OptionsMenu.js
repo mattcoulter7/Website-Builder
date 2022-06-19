@@ -2,7 +2,7 @@ import React from 'react'
 
 import { FaArrowUp, FaArrowDown } from 'react-icons/fa'
 import { RiDeleteBin6Fill } from 'react-icons/ri'
-import { AiFillPlusCircle } from 'react-icons/ai'
+import { AiFillPlusCircle,AiFillEdit } from 'react-icons/ai'
 
 import ComponentDAO from '../../../DAOs/ComponentDAO';
 import ComponentDTO from '../../../DTOs/ComponentDTO';
@@ -12,6 +12,7 @@ const OptionsMenu = ({
     up = true,
     down = true,
     add = true,
+    edit = true,
     component,
     className,
     parentContext
@@ -63,11 +64,20 @@ const OptionsMenu = ({
             <AiFillPlusCircle />
         </button>
     );
+    edit && parentContext().onClickEdit && buttons.push(
+        <button
+            className="btn btn-primary btn-sm m-1"
+            onClick={() => parentContext().onClickEdit()}
+        >
+            <AiFillEdit />
+        </button>
+    );
+
 
     return (
         <div
             style={{
-                position: 'fixed',
+                position: 'absolute',
                 zIndex: '900000',
                 transform: 'translateY(-100px)',
                 width: 'max-content'

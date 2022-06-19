@@ -11,6 +11,22 @@ export default class Section_EDIT extends EditComponent {
                 this.onInsert(result)
             })
     }
+    mousemoveonFocus(){
+        this.onSelect(true);
+    }
+    mousemoveonFocusDirect(){
+        this.onSelect(true);
+    }
+    mousedownonBlurDirect(){
+
+    }
+    mousedownonFocus(){
+        this.onSelect(true);
+    }
+    mousemoveonBlur(){
+        super.mousemoveonBlur();
+        this.onSelect(false);
+    }
     render() {
         if (!this.props.page) return null;
         return super.render(

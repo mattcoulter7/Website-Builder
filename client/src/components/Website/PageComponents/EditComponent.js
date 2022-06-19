@@ -1,3 +1,4 @@
+
 import React from "react"
 import { TelephoneMinus } from "react-bootstrap-icons";
 
@@ -19,6 +20,7 @@ export default class EditComponent extends CustomFocusser {
             focus: false,
             filter: false,
             children: [],
+            showMajorMenu: false,
             ...state
         }
 
@@ -87,7 +89,14 @@ export default class EditComponent extends CustomFocusser {
 
     onSelect(on) {
         this.setState({
-            focus: on
+            focus: on,
+            showMajorMenu: on ? this.state.showMajorMenu : false
+        })
+    }
+
+    onClickEdit() {
+        this.setState({
+            showMajorMenu: true
         })
     }
 
@@ -124,19 +133,20 @@ export default class EditComponent extends CustomFocusser {
         }
 
         return super.render(
+
             <div className={className}>
                 {this.props.component.type}
                 {
                     (() => {
                         return this.state.focus ?
-                            <OptionsMenu className={this.state.focus ? "visible-fade" : "invisible-fade"} component={this.props.component} up={false} down={false} parentContext={this.handler} /> : null
+                            <OptionsMenu component={this.props.component} up={false} down={false} parentContext={this.handler} /> : null
                     })()
                 }
                 {children}
                 {
                     (() => {
-                        return this.state.focus ?
-                            <LayoutsMenu className={this.state.focus ? "visible-fade" : "invisible-fade"} component={this.props.component} parentContext={this.handler} /> : null
+                        return this.state.showMajorMenu ?
+                            <LayoutsMenu component={this.props.component} parentContext={this.handler} /> : null
                     })()
                 }
             </div>
