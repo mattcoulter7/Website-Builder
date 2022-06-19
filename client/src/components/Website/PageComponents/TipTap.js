@@ -25,10 +25,10 @@ const TipTap = ({ value, onChange }) => {
 
     return (
         <CustomFocusser
-            onFocus={(e) => {
+            mousedownonFocusDirect={(e) => {
                 setFocus(true)
             }}
-            onBlur={(e) => {
+            mousedownonBlur={(e) => {
                 setFocus(false)
             }}>
             <TipTapMenuBar visible={focus} editor={editor} />

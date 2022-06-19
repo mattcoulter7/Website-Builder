@@ -1,11 +1,6 @@
 import React from "react"
 
 import ComponentDAO from "../../../DAOs/ComponentDAO"
-import ComponentDTO from "../../../DTOs/ComponentDTO"
-
-import CustomFocusser from "./CustomFocusser"
-import LayoutsMenu from "./LayoutsMenu";
-import OptionsMenu from "./OptionsMenu";
 
 export default class CustomComponent extends React.Component {
     constructor(props, state={}) {

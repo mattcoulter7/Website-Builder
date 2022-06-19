@@ -22,7 +22,7 @@ import { params } from "../Utils/QueryString"
 import Panel from '../components/Website/EditWebsite/Panel';
 
 
-export default class EditPage extends React.Component {
+export default class EditPage extends CustomFocusser {
     constructor(props) {
         super(props);
         this.state = {
@@ -43,9 +43,9 @@ export default class EditPage extends React.Component {
     handler() {
         return this;
     }
-    onDelete(child){
+    onDelete(child) {
         this.setState({
-            children:this.state.children.filter(c => c != child)
+            children: this.state.children.filter(c => c != child)
         })
     }
 
@@ -99,7 +99,7 @@ export default class EditPage extends React.Component {
         })
     }
 
-    onNewSection(){
+    onNewSection() {
         ComponentMapping.Section.create(this._id)
             .then((result) => {
                 this.setState({
@@ -108,25 +108,26 @@ export default class EditPage extends React.Component {
             })
     }
 
+    mousedownonBlur(e) {
+        this.onDeselect()
+    }
+
     render() {
-        return (
+        return super.render(
             <Page>
-                <CustomFocusser
-                    onBlur={() => this.onDeselect()}>
-                    {
-                        this.state.children
-                            .filter(c => c.type == "Section")
-                            .map(comp => {
-                                const CustomComponent = ComponentMapping[comp.type]
-                                return (<>
-                                    <NewLine onNew={() => this.onNewSection()}></NewLine>
-                                    <CustomComponent.edit website={this.state.website} page={this.state.page} pages={this.state.pages} component={comp} parentContext={this.handler}/>
-                                </>)
-                            })
-                    }
-                    <NewLine onNew={() => this.onNewSection()}></NewLine>
-                </CustomFocusser>
-            </Page>
+                {
+                    this.state.children
+                        .filter(c => c.type == "Section")
+                        .map(comp => {
+                            const CustomComponent = ComponentMapping[comp.type]
+                            return (<>
+                                <NewLine onNew={() => this.onNewSection()}></NewLine>
+                                <CustomComponent.edit website={this.state.website} page={this.state.page} pages={this.state.pages} component={comp} parentContext={this.handler} />
+                            </>)
+                        })
+                }
+                <NewLine onNew={() => this.onNewSection()}></NewLine>
+            </Page >
         );
     }
 }

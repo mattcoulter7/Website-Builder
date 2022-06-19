@@ -7,7 +7,7 @@ import EditComponent from "../EditComponent";
 import CustomComponent from "../CustomComponent";
 
 
-export default class Text1_EDIT extends CustomComponent {
+export default class Text1 extends CustomComponent {
     render() {
         return (
             <div dangerouslySetInnerHTML={{__html:this.props.component.value || ""}} ></div>

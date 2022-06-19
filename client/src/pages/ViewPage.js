@@ -11,7 +11,6 @@ import WebsiteDAO from "../DAOs/WebsiteDAO"
 
 import Page from '../layouts/Page';
 
-import CustomFocusser from "../components/Website/PageComponents/CustomFocusser"
 import ComponentMapping from "../components/Website/PageComponents/ComponentMapping"
 
 import Section from "../components/Website/PageComponents/Layouts/Section"

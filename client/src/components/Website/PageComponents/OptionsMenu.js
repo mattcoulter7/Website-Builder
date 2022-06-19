@@ -1,13 +1,13 @@
 import React from 'react'
 
-import {FaArrowUp,FaArrowDown} from 'react-icons/fa'
-import {RiDeleteBin6Fill} from 'react-icons/ri'
-import {AiFillPlusCircle} from 'react-icons/ai'
+import { FaArrowUp, FaArrowDown } from 'react-icons/fa'
+import { RiDeleteBin6Fill } from 'react-icons/ri'
+import { AiFillPlusCircle } from 'react-icons/ai'
 
 import ComponentDAO from '../../../DAOs/ComponentDAO';
 import ComponentDTO from '../../../DTOs/ComponentDTO';
 
-const OptionsMenu = ({ 
+const OptionsMenu = ({
     destroy = true,
     up = true,
     down = true,
@@ -30,29 +30,29 @@ const OptionsMenu = ({
                     .then((result) => {
                         let thisComponent = parentContext();
                         let thisComponentContainer = thisComponent.props.parentContext();
-                        if (thisComponentContainer){
+                        if (thisComponentContainer) {
                             thisComponentContainer.onDelete(component)
                         }
                     })
             }}
         >
-            <RiDeleteBin6Fill/>
+            <RiDeleteBin6Fill />
         </button>
     )
     up && buttons.push(
         <button
             className="btn btn-primary btn-sm m-1"
-            onClick={() => {}}
+            onClick={() => { }}
         >
-            <FaArrowUp/>
+            <FaArrowUp />
         </button>
     );
     down && buttons.push(
         <button
             className="btn btn-primary btn-sm m-1"
-            onClick={() => {}}
+            onClick={() => { }}
         >
-            <FaArrowDown/>
+            <FaArrowDown />
         </button>
     );
     add && parentContext().onClickNew && buttons.push(
@@ -60,12 +60,18 @@ const OptionsMenu = ({
             className="btn btn-primary btn-sm m-1"
             onClick={() => parentContext().onClickNew()}
         >
-            <AiFillPlusCircle/>
+            <AiFillPlusCircle />
         </button>
     );
 
     return (
-        <div className={`shadow-sm p-3 bg-white rounded ${className}`}>
+        <div
+            style={{
+                position: 'fixed',
+                zIndex: '900000',
+                transform: 'translateY(-100px)',
+                width: 'max-content'
+            }} className={`shadow-sm p-3 bg-white rounded ${className}`}>
             {buttons}
         </div>
     )

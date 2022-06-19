@@ -8,9 +8,11 @@ import EditComponent from "../EditComponent";
 
 export default class Text1_EDIT extends EditComponent {
     constructor(props){
-        super(props,{
-            directContact:false
-        })
+        super(props)
+    }
+    mousedownonBlurDirect(e) {}
+    mousedownonFocus(e) {
+        this.onSelect(true)
     }
     render() {
         return super.render(
