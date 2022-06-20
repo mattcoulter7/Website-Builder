@@ -22,7 +22,7 @@ const getHovering = (dragEvent, clientRect, tolerance = 20) => {
     return hovering;
 }
 
-export default class LayoutComponent extends React.Component {
+export default class LayoutComponent extends ConfigurableComponent {
     constructor(props) {
         super(props)
         this.layoutRef = React.createRef();
@@ -32,7 +32,7 @@ export default class LayoutComponent extends React.Component {
         e.stopPropagation()
         let hovering = getHovering(e, this.layoutRef.current.getBoundingClientRect())
 
-        this.layoutRef.current.style.border = "5px dashed transparent"
+        this.layoutRef.current.style.border = "5px dashed #eeeeee"
 
         if (!hovering) return;
         this.layoutRef.current.style[`border${hovering[0]}`] = "5px solid black"
@@ -41,17 +41,39 @@ export default class LayoutComponent extends React.Component {
         this.layoutRef.current.style.border = "5px solid transparent"
     }
     onDrop(e) {
+        e.preventDefault()
+        e.stopPropagation()
+
         this.layoutRef.current.style.border = "5px solid transparent"
+
+        let hovering = getHovering(e, this.layoutRef.current.getBoundingClientRect())
+        if (!hovering) return;
+
+        this[`onDrop${hovering[0]}`](e);
     }
-    render() {
+    onDropLeft(e) {
+
+    }
+    onDropRight(e) {
+
+    }
+    onDropTop(e) {
+
+    }
+    onDropBottom(e) {
+
+    }
+    render(props) {
+        props = props || this.props;
         return (
             <div
-                className={this.props.className}
+                className={props.className}
                 ref={this.layoutRef}
                 onDragLeave={(e) => this.onDragLeave(e)}
                 onDragOver={(e) => this.onDragOver(e)}
                 onDrop={(e) => this.onDrop(e)}>
-                {this.props.children}
+                {this.props.component.type}
+                {props.children}
             </div>
         )
     }

@@ -55,8 +55,8 @@ export default class IFocusable extends React.Component {
     }
 
     handle(event) {
-        const isInside = this.wrapperRef && this.wrapperRef.current.contains(event.target);
-        const isDirectContact = this.wrapperRef && this.wrapperRef.current == this.getFirstFocusserParent(event.target);
+        const isInside = this.wrapperRef.current && this.wrapperRef.current.contains(event.target);
+        const isDirectContact = this.wrapperRef.current && this.wrapperRef.current == this.getFirstFocusserParent(event.target);
 
         if (isInside) {
             if (isDirectContact) {
