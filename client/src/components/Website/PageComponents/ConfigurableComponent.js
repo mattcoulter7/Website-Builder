@@ -188,7 +188,10 @@ export default class ConfigurableComponent extends IFocusable {
 
         return super.render(
             <div>
-                <div draggable={true} className={className}>
+                <div draggable={true} onDragStart={(e) => {
+                    e.stopPropagation();
+                    ConfigurableComponent.dragged = this
+                }} onDragEnd={() => ConfigurableComponent.dragged = null} className={className}>
                     {this.props.component.type}
                     {
                         (() => {
@@ -233,4 +236,5 @@ export default class ConfigurableComponent extends IFocusable {
     }
 
     static selected;
+    static dragged; // reference to current configurable component which is being dragged
 }

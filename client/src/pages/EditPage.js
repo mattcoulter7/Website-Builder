@@ -48,6 +48,11 @@ export default class EditPage extends IFocusable {
             children: this.state.children.filter(c => c != child)
         })
     }
+    whenInsert(child) {
+        this.setState({
+            children: this.state.children.concat(child)
+        })
+    }
 
     componentDidMount() {
         this._id = params()._id;
@@ -101,10 +106,20 @@ export default class EditPage extends IFocusable {
 
     onNew() {
         ComponentMapping.Section.create(this._id)
-            .then((result) => {
-                this.setState({
-                    children: this.state.children.concat(result)
-                })
+            .then((section) => {
+                ComponentMapping.Container.create(section._id)
+                    .then((container) => {
+                        ComponentMapping.Row.create(container._id)
+                            .then((row) => {
+                                ComponentMapping.Col.create(row._id)
+                                    .then((col) => {
+                                        ComponentMapping.Text1.create(col._id)
+                                            .then((text1) => {
+                                                this.whenInsert(section);
+                                            })
+                                    })
+                            })
+                    })
             })
     }
 
@@ -122,7 +137,7 @@ export default class EditPage extends IFocusable {
                             const CustomComponent = ComponentMapping[comp.type]
                             return (<>
                                 <NewLine onNew={() => this.onNew()}></NewLine>
-                                <CustomComponent.edit website={this.state.website} page={this.state.page} pages={this.state.pages} component={comp} parentContext={this.handler}/>
+                                <CustomComponent.edit website={this.state.website} page={this.state.page} pages={this.state.pages} component={comp} parentContext={this.handler} />
                             </>)
                         })
                 }

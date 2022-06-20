@@ -12,6 +12,7 @@ export default class Col_EDIT extends LayoutComponent {
             })
     }
     render() {
+        if (this.state.children.length == 0) return null;
         return super.render({
             className: "col",
             children: this.state.children

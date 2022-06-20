@@ -49,7 +49,8 @@ export default class LayoutComponent extends ConfigurableComponent {
         let hovering = getHovering(e, this.layoutRef.current.getBoundingClientRect())
         if (!hovering) return;
 
-        this[`onDrop${hovering[0]}`](e);
+        let ref = ConfigurableComponent.dragged;
+        this[`onDrop${hovering[0]}`](e, ref);
     }
     onDropLeft(e) {
 
