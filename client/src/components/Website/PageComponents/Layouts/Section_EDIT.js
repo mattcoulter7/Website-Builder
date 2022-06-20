@@ -37,7 +37,7 @@ export default class Section_EDIT extends ConfigurableComponent {
                     this.state.children
                         .map(comp => {
                             const CustomComponent = ComponentMapping[comp.type]
-                            return <CustomComponent.edit website={this.props.website} page={this.props.page} pages={this.props.pages} component={comp} parentContext={this.handler} />
+                            return <CustomComponent.edit key={comp._id} website={this.props.website} page={this.props.page} pages={this.props.pages} component={comp} parentContext={this.handler} />
                         })
                 }
             </section>

@@ -33,24 +33,33 @@ export default class LayoutComponent extends ConfigurableComponent {
         let hovering = getHovering(e, this.layoutRef.current.getBoundingClientRect())
 
         this.layoutRef.current.style.border = "5px dashed #eeeeee"
+        this.layoutRef.current.style.backgroundColor = ""
 
-        if (!hovering) return;
-        this.layoutRef.current.style[`border${hovering[0]}`] = "5px solid black"
+        if (hovering) {
+            this.layoutRef.current.style[`border${hovering[0]}`] = "5px solid navy"
+        } else {
+            this.layoutRef.current.style.backgroundColor = "rgb(250,250,250)"
+        }
     }
     onDragLeave(e) {
         this.layoutRef.current.style.border = "5px solid transparent"
+        this.layoutRef.current.style.backgroundColor = ""
     }
     onDrop(e) {
         e.preventDefault()
         e.stopPropagation()
 
         this.layoutRef.current.style.border = "5px solid transparent"
+        this.layoutRef.current.style.backgroundColor = ""
 
         let hovering = getHovering(e, this.layoutRef.current.getBoundingClientRect())
-        if (!hovering) return;
 
         let ref = ConfigurableComponent.dragged;
-        this[`onDrop${hovering[0]}`](e, ref);
+        if (hovering) {
+            this[`onDrop${hovering[0]}`](e, ref);
+        } else {
+            this.onDropBody(e, ref)
+        }
     }
     onDropLeft(e) {
 
@@ -64,6 +73,9 @@ export default class LayoutComponent extends ConfigurableComponent {
     onDropBottom(e) {
 
     }
+    onDropBody(e) {
+
+    }
     render(props) {
         props = props || this.props;
         return (
@@ -73,7 +85,7 @@ export default class LayoutComponent extends ConfigurableComponent {
                 onDragLeave={(e) => this.onDragLeave(e)}
                 onDragOver={(e) => this.onDragOver(e)}
                 onDrop={(e) => this.onDrop(e)}>
-                {this.props.component.type}
+                {true ? null : this.props.component.type + " (" + this.props.component._id + ")"}
                 {props.children}
             </div>
         )

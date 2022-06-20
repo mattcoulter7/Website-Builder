@@ -95,11 +95,12 @@ const componentMappings = {
             type: "Carousel1"
         }))
     }),
-    'Col': new ComponentMap(Col, Col_EDIT, (parentId) => {
+    'Col': new ComponentMap(Col, Col_EDIT, (parentId, index) => {
         return ComponentDAO
             .insert(new ComponentDTO({
                 parentId: parentId,
-                type: "Col"
+                type: "Col",
+                index: index
             }))
     }, (comp) => {
         return ComponentDAO.update(new ComponentDTO({

@@ -5,32 +5,44 @@ export default class ComponentDTO extends DTO {
     #type;
     #value;
     #src;
-    #children;
+    #index;
     constructor(obj){
         super(obj);
         this.#parentId = obj.parentId;
         this.#type = obj.type;
         this.#value = obj.value;
         this.#src = obj.src;
-        this.#children = []; // needs to be fetched in manually
+        this.#index = obj.index;
     }
     get parentId(){
         return this.#parentId;
     }
+    set parentId(value){
+        this.#parentId = value;
+    }
     get type(){
         return this.#type;
+    }
+    set type(value){
+        this.#type = value;
     }
     get value(){
         return this.#value;
     }
+    set value(value){
+        this.#value = value;
+    }
     get src(){
         return this.#src;
     }
-    get children(){
-        return this.#children;
+    set src(value){
+        this.#src = value;
     }
-    set children(value){
-        this.#children = value;
+    get index(){
+        return this.#index;
+    }
+    set index(value){
+        this.#index = value;
     }
     toJSON() { // override this
         return {
@@ -38,7 +50,8 @@ export default class ComponentDTO extends DTO {
             parentId:this.parentId,
             type:this.type,
             value:this.value,
-            src:this.src
+            src:this.src,
+            index:this.index
         }
     }
 }

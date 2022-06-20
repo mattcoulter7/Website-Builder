@@ -4,6 +4,7 @@ import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import TipTap from "../TipTap";
 
 import ConfigurableComponent from "../ConfigurableComponent";
+import ComponentMappings from "../ComponentMapping";
 
 
 export default class Text1_EDIT extends ConfigurableComponent {
@@ -14,6 +15,13 @@ export default class Text1_EDIT extends ConfigurableComponent {
                 value: e.target.value
             })
         }} value={this.state.value} />)
+    }
+    onNew() {
+        let index = this.props.component.index + 1
+        ComponentMappings.Text1.create(this.props.parentContext().props.component._id, index)
+            .then((text) => {
+                this.props.parentContext().onUpdateChildIndex(text, index);
+            })
     }
     mousedownonBlurDirect(e) { }
     mousedownonFocus(e) {

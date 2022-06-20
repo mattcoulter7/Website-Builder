@@ -137,7 +137,7 @@ export default class EditPage extends IFocusable {
                             const CustomComponent = ComponentMapping[comp.type]
                             return (<>
                                 <NewLine onNew={() => this.onNew()}></NewLine>
-                                <CustomComponent.edit website={this.state.website} page={this.state.page} pages={this.state.pages} component={comp} parentContext={this.handler} />
+                                <CustomComponent.edit key={comp._id} website={this.state.website} page={this.state.page} pages={this.state.pages} component={comp} parentContext={this.handler} />
                             </>)
                         })
                 }

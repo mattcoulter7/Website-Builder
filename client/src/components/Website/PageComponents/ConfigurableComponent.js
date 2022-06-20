@@ -73,7 +73,7 @@ export default class ConfigurableComponent extends IFocusable {
         super.componentDidMount()
         ComponentDAO.select()
             .then((result) => {
-                return result.filter(c => c.parentId == this.props.component._id)
+                return result.filter(c => c.parentId == this.props.component._id).sort((a, b) => a.index > b.index ? 1 : -1)
             })
             .then((result) => {
                 this.setState({
@@ -87,15 +87,20 @@ export default class ConfigurableComponent extends IFocusable {
 
     // when a child component has been removed
     whenDelete(child) {
+        let children = this.state.children.filter(comp => comp != child);
+        // delete the component if it doesn't exist
+        //if (children.length == 0){
+        //    ComponentDAO.delete(this.props.component._id)
+        //}
         this.setState({
-            children: this.state.children.filter(comp => comp != child)
+            children: children
         })
     }
 
     // when a child component has been added
     whenInsert(child) {
         this.setState({
-            children: this.state.children.concat(child)
+            children: this.state.children.concat(child).sort((a, b) => a.index > b.index ? 1 : -1)
         });
     }
 
@@ -105,6 +110,39 @@ export default class ConfigurableComponent extends IFocusable {
         children[children.findIndex((c) => c._id == child._id)] = child;
         this.setState({
             children: children
+        })
+    }
+
+    onUpdateChildIndex(child, index) {
+        let children = this.state.children;
+        //ensure the child exists if it doesn't already exist
+        if (!children.find(c => c._id == child._id)) {
+            children.push(child)
+        }
+        // if the index got bigger (dragged from left to right)
+        if (index >= child.index) {
+            // get all the children where the index is <= the new index (excluding the child)
+            children.filter(c => c.index <= index && c._id != child._id)
+                // subtract 1 from their index
+                .forEach(c => {
+                    c.index -= 1;
+                    ComponentDAO.update(c)
+                })
+        }
+        // if the index got smaller (dragger from right to left)
+        else if (index < child.index) {
+            // get all the children where the index is >= the new index (excluding the child)
+            children.filter(c => c.index >= index && c._id != child._id)
+                // add 1 to their index
+                .forEach(c => {
+                    c.index += 1;
+                    ComponentDAO.update(c)
+                })
+        }
+        child.index = index;
+        ComponentDAO.update(child)
+        this.setState({
+            children: children.sort((a, b) => a.index > b.index ? 1 : -1)
         })
     }
 
@@ -192,7 +230,7 @@ export default class ConfigurableComponent extends IFocusable {
                     e.stopPropagation();
                     ConfigurableComponent.dragged = this
                 }} onDragEnd={() => ConfigurableComponent.dragged = null} className={className}>
-                    {this.props.component.type}
+                    {this.props.component.type + " (" + this.props.component._id + ")"}
                     {
                         (() => {
                             return this.state.focus ?
