@@ -1,10 +1,9 @@
 import React from "react";
 
 import ComponentMapping from "../ComponentMapping";
-import CustomComponent from "../CustomComponent";
 import EditComponent from "../EditComponent";
 
-export default class Col_EDIT extends CustomComponent {
+export default class Col extends EditComponent {
     render() {
         return (
             <div className="col">

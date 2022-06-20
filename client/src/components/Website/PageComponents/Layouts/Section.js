@@ -3,9 +3,8 @@ import React from "react";
 import EditComponent from "../EditComponent";
 
 import ComponentMapping from "../ComponentMapping";
-import CustomComponent from "../CustomComponent";
 
-export default class Section_EDIT extends CustomComponent {
+export default class Section extends EditComponent {
     render() {
         if (!this.props.page) return null;
         return (

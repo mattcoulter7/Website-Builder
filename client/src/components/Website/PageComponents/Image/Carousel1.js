@@ -4,16 +4,7 @@ import { Carousel } from "react-bootstrap";
 
 import EditComponent from "../EditComponent";
 
-import ComponentMapping from "../ComponentMapping";
-
-import FileDAO from "../../../../DAOs/FileDAO";
-import TipTap from "../TipTap";
-
-import ComponentDAO from "../../../../DAOs/ComponentDAO";
-import ComponentDTO from "../../../../DTOs/ComponentDTO";
-import CustomComponent from "../CustomComponent";
-
-export default class Carousel1_EDIT extends CustomComponent {
+export default class Carousel1_EDIT extends EditComponent {
     render() {
         return (
             <Carousel>
@@ -29,7 +20,7 @@ export default class Carousel1_EDIT extends CustomComponent {
                                     alt={comp.src}
                                 />
                                 <Carousel.Caption>
-                                    <div dangerouslySetInnerHTML={{__html:comp.value || ""}}></div>
+                                    <div dangerouslySetInnerHTML={{ __html: comp.value || "" }}></div>
                                 </Carousel.Caption>
                             </Carousel.Item>)
                         })

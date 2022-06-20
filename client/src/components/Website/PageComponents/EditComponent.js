@@ -188,8 +188,8 @@ export default class EditComponent extends IFocusable {
 
         return super.render(
             <div>
-                <div className={className}>
-                    {this.props.component._id}
+                <div draggable={true} className={className}>
+                    {this.props.component.type}
                     {
                         (() => {
                             return this.state.focus ?

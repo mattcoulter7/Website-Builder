@@ -1,11 +1,10 @@
 import React from "react";
 
 import ComponentMapping from "../ComponentMapping";
-import CustomComponent from "../CustomComponent";
 
 import EditComponent from "../EditComponent";
 
-export default class Row_EDIT extends CustomComponent {
+export default class Row_EDIT extends EditComponent {
     render() {
         return (
             <div className="row">

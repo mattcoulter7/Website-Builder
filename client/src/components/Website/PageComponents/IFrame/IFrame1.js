@@ -1,12 +1,8 @@
 import React from "react";
 
-import ComponentDAO from "../../../../DAOs/ComponentDAO";
-import ComponentDTO from "../../../../DTOs/ComponentDTO";
+import EditComponent from "../EditComponent";
 
-import FileDAO from "../../../../DAOs/FileDAO";
-import CustomComponent from "../CustomComponent";
-
-export default class IFrame1 extends CustomComponent {
+export default class IFrame1 extends EditComponent {
     constructor(props) {
         super(props, {}, {
             height: 0
