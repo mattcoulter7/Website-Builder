@@ -22,7 +22,7 @@ export default class ConfigurableComponent extends IFocusable {
             showMajorMenu: false,
             tabs: [],
             ...state,
-            ...this.props.component.toJSON()
+            ...props.component.toJSON()
         }
 
         this.handler = this.handler.bind(this)

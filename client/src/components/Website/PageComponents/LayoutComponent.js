@@ -61,20 +61,20 @@ export default class LayoutComponent extends ConfigurableComponent {
             this.onDropBody(e, ref)
         }
     }
-    onDropLeft(e) {
-
+    onDropLeft(e, ref) {
+        this.props.onDropLeft && this.props.onDropLeft(e, ref);
     }
-    onDropRight(e) {
-
+    onDropRight(e, ref) {
+        this.props.onDropRight && this.props.onDropRight(e, ref);
     }
-    onDropTop(e) {
-
+    onDropTop(e, ref) {
+        this.props.onDropTop && this.props.onDropTop(e, ref);
     }
-    onDropBottom(e) {
-
+    onDropBottom(e, ref) {
+        this.props.onDropBottom && this.props.onDropBottom(e, ref);
     }
-    onDropBody(e) {
-
+    onDropBody(e, ref) {
+        this.props.onDropBody && this.props.onDropBody(e, ref);
     }
     render(props) {
         props = props || this.props;
