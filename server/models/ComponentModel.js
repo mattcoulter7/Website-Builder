@@ -6,15 +6,19 @@ const componentSchema = new mongoose.Schema({
         type: ObjectId,
         required: true
     },
-    type:{
+    type: {
         type: String,
         required: true
     },
-    value:{
+    value: {
         type: String
     },
-    src:{
+    src: {
         type: String
+    },
+    index: {
+        type: Number,
+        default: 0
     }
 })
 
