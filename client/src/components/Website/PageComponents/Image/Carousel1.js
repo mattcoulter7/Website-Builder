@@ -2,9 +2,9 @@ import React from "react";
 
 import { Carousel } from "react-bootstrap";
 
-import EditComponent from "../EditComponent";
+import ConfigurableComponent from "../ConfigurableComponent";
 
-export default class Carousel1_EDIT extends EditComponent {
+export default class Carousel1_EDIT extends ConfigurableComponent {
     render() {
         return (
             <Carousel>

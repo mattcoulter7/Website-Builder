@@ -4,9 +4,9 @@ import ComponentDAO from "../../../../DAOs/ComponentDAO";
 import ComponentDTO from "../../../../DTOs/ComponentDTO";
 
 import FileDAO from "../../../../DAOs/FileDAO";
-import EditComponent from "../EditComponent";
+import ConfigurableComponent from "../ConfigurableComponent";
 
-export default class IFrame1_Edit extends EditComponent {
+export default class IFrame1_Edit extends ConfigurableComponent {
     constructor(props) {
         super(props, {
             height: 0

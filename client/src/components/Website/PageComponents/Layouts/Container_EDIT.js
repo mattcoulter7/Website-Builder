@@ -1,10 +1,10 @@
 import React from "react";
 
-import EditComponent from "../EditComponent";
+import ConfigurableComponent from "../ConfigurableComponent";
 
 import ComponentMapping from "../ComponentMapping";
 
-export default class Section_EDIT extends EditComponent {
+export default class Section_EDIT extends ConfigurableComponent {
     onNew(){
         ComponentMapping.Row.create(this.props.component._id)
             .then((result) => {

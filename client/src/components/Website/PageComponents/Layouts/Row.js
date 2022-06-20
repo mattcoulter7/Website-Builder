@@ -2,9 +2,9 @@ import React from "react";
 
 import ComponentMapping from "../ComponentMapping";
 
-import EditComponent from "../EditComponent";
+import ConfigurableComponent from "../ConfigurableComponent";
 
-export default class Row_EDIT extends EditComponent {
+export default class Row_EDIT extends ConfigurableComponent {
     render() {
         return (
             <div className="row">

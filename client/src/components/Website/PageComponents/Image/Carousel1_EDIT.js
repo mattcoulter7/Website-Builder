@@ -2,7 +2,7 @@ import React from "react";
 
 import { Carousel } from "react-bootstrap";
 
-import EditComponent from "../EditComponent";
+import ConfigurableComponent from "../ConfigurableComponent";
 
 import ComponentMapping from "../ComponentMapping";
 
@@ -12,7 +12,7 @@ import TipTap from "../TipTap";
 import ComponentDAO from "../../../../DAOs/ComponentDAO";
 import ComponentDTO from "../../../../DTOs/ComponentDTO";
 
-export default class Carousel1_EDIT extends EditComponent {
+export default class Carousel1_EDIT extends ConfigurableComponent {
     onNew() {
         ComponentMapping.CarouselItem1.create(this.props.component._id)
             .then((result) => {

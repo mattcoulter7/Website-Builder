@@ -1,9 +1,9 @@
 import React from "react";
 
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
-import EditComponent from "../EditComponent";
+import ConfigurableComponent from "../ConfigurableComponent";
 
-export default class Navbar1 extends EditComponent {
+export default class Navbar1 extends ConfigurableComponent {
     render() {
         if (!this.props.website) return null;
         return super.render(

@@ -1,7 +1,7 @@
 import React from "react";
 
 import ComponentMapping from "../ComponentMapping";
-import EditComponent from "../EditComponent";
+import ConfigurableComponent from "../ConfigurableComponent";
 
 const pointInRect = (pt, rect) => {
     return rect.x <= pt[0] && pt[0] <= rect.x + rect.width &&
@@ -24,7 +24,7 @@ const getHovering = (dragEvent, clientRect, tolerance = 20) => {
     return hovering;
 }
 
-export default class Col_EDIT extends EditComponent {
+export default class Col_EDIT extends ConfigurableComponent {
     constructor(props) {
         super(props)
         this.layoutRef = React.createRef();

@@ -3,10 +3,10 @@ import React from "react";
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import TipTap from "../TipTap";
 
-import EditComponent from "../EditComponent";
+import ConfigurableComponent from "../ConfigurableComponent";
 
 
-export default class Text1_EDIT extends EditComponent {
+export default class Text1_EDIT extends ConfigurableComponent {
     initializeTabs() {
         super.initializeTabs()
         this.addTabContent("Content", () => <input className="form-control" onChange={(e) => {

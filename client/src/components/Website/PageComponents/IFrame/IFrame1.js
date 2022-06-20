@@ -1,8 +1,8 @@
 import React from "react";
 
-import EditComponent from "../EditComponent";
+import ConfigurableComponent from "../ConfigurableComponent";
 
-export default class IFrame1 extends EditComponent {
+export default class IFrame1 extends ConfigurableComponent {
     constructor(props) {
         super(props, {}, {
             height: 0

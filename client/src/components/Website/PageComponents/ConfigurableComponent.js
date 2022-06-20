@@ -12,7 +12,7 @@ import OptionsMenu from "./OptionsMenu";
 import FunctionDoesSomething from '../../../Utils/FunctionDoesSomething'
 import ComponentMapping from "./ComponentMapping";
 
-export default class EditComponent extends IFocusable {
+export default class ConfigurableComponent extends IFocusable {
     constructor(props, state = {}) {
         super(props);
         this.state = {
@@ -165,7 +165,7 @@ export default class EditComponent extends IFocusable {
     }
 
     mousedownonFocusDirect(e) {
-        EditComponent.selected = this;
+        ConfigurableComponent.selected = this;
         this.onSelect(true)
     }
     mousedownonBlurDirect(e) {

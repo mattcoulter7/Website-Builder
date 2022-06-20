@@ -1,10 +1,10 @@
 import React from "react";
 
-import EditComponent from "../EditComponent";
+import ConfigurableComponent from "../ConfigurableComponent";
 
 import ComponentMapping from "../ComponentMapping";
 
-export default class Section extends EditComponent {
+export default class Section extends ConfigurableComponent {
     render() {
         if (!this.props.page) return null;
         return (
