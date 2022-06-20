@@ -19,7 +19,8 @@ class LayoutsMenu extends React.Component {
     render() {
         return (
             <div ref={this.wrapperRef} class="card shadow-sm bg-white rounded" style={{
-                width: "20rem",
+                ...this.props.style || {},
+                width: "40rem",
                 position: "fixed",
                 zIndex: 10000
             }}>

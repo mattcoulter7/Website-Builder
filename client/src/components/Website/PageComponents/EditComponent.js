@@ -37,7 +37,7 @@ export default class EditComponent extends IFocusable {
                         this.props.parentContext().whenUpdate(result)
                     })
             }}>{entry[0]}</button>)
-            ,"Change Type")
+            , "Change Type")
     }
 
     addTabContent(tabName, content, sectionName = "") {
@@ -88,7 +88,7 @@ export default class EditComponent extends IFocusable {
     // when a child component has been removed
     whenDelete(child) {
         this.setState({
-            children: this.state.children.filter(c => c != child)
+            children: this.state.children.filter(comp => comp != child)
         })
     }
 
@@ -96,13 +96,13 @@ export default class EditComponent extends IFocusable {
     whenInsert(child) {
         this.setState({
             children: this.state.children.concat(child)
-        })
+        });
     }
 
     // this component has been updated, should cause rerender
     whenUpdate(child) {
         let children = this.state.children;
-        children[children.findIndex((c) => c._id == child._id)] = child;
+        children[children.findIndex((c) => c.props.component._id == child._id)] = child;
         this.setState({
             children: children
         })
@@ -121,12 +121,24 @@ export default class EditComponent extends IFocusable {
     }
     onNew() { }
     onDelete() {
+        // ensure all children are clear from the dom
+        this.setState({
+            children: []
+        })
+
+        // update parent state to rerender
         this.props.parentContext().whenDelete(this.props.component)
-        ComponentDAO
-            .delete(this.props.component._id)
-            .then(result => {
-                console.log(result)
-            })
+
+        //circular delete all children that branch from this component
+        ComponentDAO.select()
+            .then((result) => {
+                const deleteEntirely = (comp) => {
+                    ComponentDAO.delete(comp._id)
+                    result.filter(c => c.parentId == comp._id)
+                        .forEach(deleteEntirely)
+                }
+                deleteEntirely(this.props.component)
+            });
     }
 
     onFilter(on) {
@@ -175,36 +187,41 @@ export default class EditComponent extends IFocusable {
         }
 
         return super.render(
-            <div className={className}>
-                {this.props.component.type}
-                {
-                    (() => {
-                        return this.state.focus ?
-                            <OptionsMenu
-                                onDelete={() => {
-                                    this.onDelete()
-                                }}
-                                onEdit={() => {
-                                    this.setState({
-                                        showMajorMenu: true
-                                    })
-                                }}
-                                onAdd={FunctionDoesSomething(this.onNew) ? () => {
-                                    this.onNew()
-                                } : null}
-                                onUp={() => {
+            <div>
+                <div className={className}>
+                    {this.props.component._id}
+                    {
+                        (() => {
+                            return this.state.focus ?
+                                <OptionsMenu
+                                    onDelete={() => {
+                                        this.onDelete()
+                                    }}
+                                    onEdit={() => {
+                                        this.setState({
+                                            showMajorMenu: true
+                                        })
+                                    }}
+                                    onAdd={FunctionDoesSomething(this.onNew) ? () => {
+                                        this.onNew()
+                                    } : null}
+                                    onUp={() => {
 
-                                }}
-                                onDown={() => {
+                                    }}
+                                    onDown={() => {
 
-                                }} /> : null
-                    })()
-                }
-                {children}
+                                    }} /> : null
+                        })()
+                    }
+                    {children}
+                </div>
                 {
                     (() => {
                         return this.state.showMajorMenu ?
-                            <LayoutsMenu tabs={this.preparedTabs} component={this.props.component} onClose={() => {
+                            <LayoutsMenu tabs={this.preparedTabs} style={{
+                                right: "20%",
+                                top: "40%"
+                            }} component={this.props.component} onClose={() => {
                                 this.setState({
                                     showMajorMenu: false
                                 })
