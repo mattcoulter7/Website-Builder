@@ -102,7 +102,7 @@ export default class EditComponent extends IFocusable {
     // this component has been updated, should cause rerender
     whenUpdate(child) {
         let children = this.state.children;
-        children[children.findIndex((c) => c.props.component._id == child._id)] = child;
+        children[children.findIndex((c) => c._id == child._id)] = child;
         this.setState({
             children: children
         })
