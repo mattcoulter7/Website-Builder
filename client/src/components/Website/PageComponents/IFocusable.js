@@ -76,8 +76,7 @@ export default class IFocusable extends React.Component {
 
     }
 
-    render(children) {
-        children = children || this.props.children;
-        return <div className="focusser" ref={this.wrapperRef}>{children}</div>;
+    render() {
+        return <div className="focusser" ref={this.wrapperRef}>{this.props.children}</div>;
     }
 }

@@ -4,7 +4,7 @@ import ConfigurableComponent from "../ConfigurableComponent";
 
 import ComponentMapping from "../ComponentMapping";
 
-export default class Section_EDIT extends ConfigurableComponent {
+export default class Container extends ConfigurableComponent {
     render() {
         if (!this.props.page) return null;
         return (

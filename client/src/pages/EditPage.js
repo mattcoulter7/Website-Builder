@@ -32,16 +32,12 @@ export default class EditPage extends IFocusable {
             pages: []
         }
         this._id = null;
-        this.handler = this.handler.bind(this);
+        
         document.addEventListener("keydown", (e) => {
             if (e.key == "Escape") {
                 this.onDeselect();
             }
         })
-    }
-
-    handler() {
-        return this;
     }
     whenDelete(child) {
         this.setState({
@@ -128,21 +124,30 @@ export default class EditPage extends IFocusable {
     }
 
     render() {
-        return super.render(
-            <Page>
-                {
-                    this.state.children
-                        .filter(c => c.type == "Section")
-                        .map(comp => {
-                            const CustomComponent = ComponentMapping[comp.type]
-                            return (<>
-                                <NewLine onNew={() => this.onNew()}></NewLine>
-                                <CustomComponent.edit key={comp._id} website={this.state.website} page={this.state.page} pages={this.state.pages} component={comp} parentContext={this.handler} />
-                            </>)
-                        })
-                }
-                <NewLine onNew={() => this.onNew()}></NewLine>
-            </Page >
+        return (
+            <IFocusable
+                mousedownonBlur={(e) => this.mousedownonBlur(e)}>
+                <Page>
+                    {
+                        this.state.children
+                            .filter(c => c.type == "Section")
+                            .map(comp => {
+                                const CustomComponent = ComponentMapping[comp.type]
+                                return (<>
+                                    <NewLine onNew={() => this.onNew()}></NewLine>
+                                    <CustomComponent.edit
+                                        key={comp._id}
+                                        website={this.state.website}
+                                        page={this.state.page}
+                                        pages={this.state.pages}
+                                        component={comp}
+                                        parentContext={() => this} />
+                                </>)
+                            })
+                    }
+                    <NewLine onNew={() => this.onNew()}></NewLine>
+                </Page >
+            </IFocusable>
         );
     }
 }

@@ -12,65 +12,18 @@ import OptionsMenu from "./OptionsMenu";
 import FunctionDoesSomething from '../../../Utils/FunctionDoesSomething'
 import ComponentMapping from "./ComponentMapping";
 
-export default class ConfigurableComponent extends IFocusable {
+export default class ConfigurableComponent extends React.Component {
     constructor(props, state = {}) {
         super(props);
         this.state = {
-            focus: false,
-            filter: false,
             children: [],
-            showMajorMenu: false,
             tabs: [],
             ...state,
             ...props.component.toJSON()
         }
-
-        this.handler = this.handler.bind(this)
-        this.initializeTabs();
-    }
-
-    initializeTabs() {
-        this.addTabContent("Content", () =>
-            Object.entries(ComponentMapping).map(entry => <button className="btn btn-primary m-1" onClick={(e) => {
-                ComponentMapping[entry[0]].update(this.props.component)
-                    .then((result) => {
-                        this.props.parentContext().whenUpdate(result)
-                    })
-            }}>{entry[0]}</button>)
-            , "Change Type")
-    }
-
-    addTabContent(tabName, content, sectionName = "") {
-        this.state.tabs[tabName] = this.state.tabs[tabName] || {
-            name: tabName,
-            content: [],
-            sections: {}
-        };
-
-        if (sectionName) {
-            this.state.tabs[tabName].sections[sectionName] = this.state.tabs[tabName].sections[sectionName] || {
-                name: sectionName,
-                content: []
-            }
-            this.state.tabs[tabName].sections[sectionName].content.push(content)
-        } else {
-            this.state.tabs[tabName].content.push(content);
-        }
-    }
-
-    get preparedTabs() {
-        return Object.values(this.state.tabs).map(tab => ({
-            ...tab,
-            sections: Object.values(tab.sections)
-        }))
-    }
-
-    handler() {
-        return this;
     }
 
     componentDidMount() {
-        super.componentDidMount()
         ComponentDAO.select()
             .then((result) => {
                 return result.filter(c => c.parentId == this.props.component._id).sort((a, b) => a.index > b.index ? 1 : -1)
@@ -80,9 +33,6 @@ export default class ConfigurableComponent extends IFocusable {
                     children: result
                 })
             })
-    }
-    componentWillUnmount() {
-        super.componentWillUnmount()
     }
 
     // when a child component has been removed
@@ -177,100 +127,6 @@ export default class ConfigurableComponent extends IFocusable {
                 }
                 deleteEntirely(this.props.component)
             });
-    }
-
-    onFilter(on) {
-        this.setState({
-            filter: on
-        })
-    }
-
-    onSelect(on) {
-        this.setState({
-            focus: on,
-            showMajorMenu: on ? this.state.showMajorMenu : false
-        })
-    }
-
-    mousemoveonFocusDirect(e) {
-        this.onFilter(true)
-    }
-    mousemoveonBlurDirect(e) {
-        this.onFilter(false)
-    }
-    mousemoveonBlur(e) {
-        this.onFilter(false)
-    }
-
-    mousedownonFocusDirect(e) {
-        ConfigurableComponent.selected = this;
-        this.onSelect(true)
-    }
-    mousedownonBlurDirect(e) {
-        this.onSelect(false)
-    }
-    mousedownonBlur(e) {
-        this.onSelect(false)
-    }
-
-    render(children, tabs) {
-        var className = "";
-        if (this.state.focus) {
-            className += " selected"
-        } else {
-            className += " deselected"
-            if (this.state.filter) {
-                className += " hover"
-            }
-        }
-
-        return super.render(
-            <div>
-                <div draggable={true} onDragStart={(e) => {
-                    e.stopPropagation();
-                    ConfigurableComponent.dragged = this
-                }} onDragEnd={() => ConfigurableComponent.dragged = null} className={className}>
-                    {this.props.component.type + " (" + this.props.component._id + ")"}
-                    {
-                        (() => {
-                            return this.state.focus ?
-                                <OptionsMenu
-                                    onDelete={() => {
-                                        this.onDelete()
-                                    }}
-                                    onEdit={() => {
-                                        this.setState({
-                                            showMajorMenu: true
-                                        })
-                                    }}
-                                    onAdd={FunctionDoesSomething(this.onNew) ? () => {
-                                        this.onNew()
-                                    } : null}
-                                    onUp={() => {
-
-                                    }}
-                                    onDown={() => {
-
-                                    }} /> : null
-                        })()
-                    }
-                    {children}
-                </div>
-                {
-                    (() => {
-                        return this.state.showMajorMenu ?
-                            <LayoutsMenu tabs={this.preparedTabs} style={{
-                                right: "20%",
-                                top: "40%"
-                            }} component={this.props.component} onClose={() => {
-                                this.setState({
-                                    showMajorMenu: false
-                                })
-                            }} /> : null
-                    })()
-                }
-            </div>
-        );
     }
 
     static selected;

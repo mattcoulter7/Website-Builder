@@ -8,18 +8,19 @@ export default class IFrame1 extends ConfigurableComponent {
             height: 0
         })
         this.iframeRef = React.createRef(this);
-        this.handleResize = this.handleResize.bind(this);
     }
     handleResize() {
         this.iframeRef.current.height = this.iframeRef.current.clientWidth * 9 / 16;
     }
     componentDidMount() {
-        this.handleResize();
-        window.addEventListener("resize", this.handleResize);
+        super.componentDidMount();
+        this.handleResize()
+        window.addEventListener("resize", () => this.handleResize());
     }
 
     componentWillUnmount() {
-        window.removeEventListener("resize", this.handleResize);
+        super.componentWillUnmount();
+        window.removeEventListener("resize", () => this.handleResize());
     }
     render() {
         return (

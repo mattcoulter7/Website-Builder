@@ -20,6 +20,7 @@ export default class IMoveable extends React.Component {
         this.onDrag(e);
     }
     onDragStart(e) {
+        e.preventDefault()
         this.dragging = true;
 
         e.stopPropagation();

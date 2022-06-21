@@ -5,14 +5,14 @@ import TipTap from "../TipTap";
 
 import ConfigurableComponent from "../ConfigurableComponent";
 import ComponentMappings from "../ComponentMapping";
-import LayoutComponent from "../LayoutComponent";
 import ComponentDAO from "../../../../DAOs/ComponentDAO";
+import LayoutComponent from "../LayoutComponent";
+import EditableComponent from "../EditableComponent";
 
 
 export default class Text1_EDIT extends ConfigurableComponent {
-    initializeTabs() {
-        super.initializeTabs()
-        this.addTabContent("Content", () => <input className="form-control" onChange={(e) => {
+    initializeTabs(context) {
+        context("Content", () => <input className="form-control" onChange={(e) => {
             this.save({
                 value: e.target.value
             })
@@ -25,37 +25,35 @@ export default class Text1_EDIT extends ConfigurableComponent {
                 this.props.parentContext().onUpdateChildIndex(text, index);
             })
     }
-    mousedownonBlurDirect(e) { }
-    mousedownonFocus(e) {
-        this.onSelect(true)
+    mousedownonBlurDirect(e, context) { }
+    mousedownonFocus(e, context) {
+        context.onSelect(true)
     }
-    mousemoveonFocus() {
-        this.onFilter(true);
-    }
-    componentDidMount() {
-        super.componentDidMount();
-    }
-    mountVertically(e, ref, index) {
-        ref.props.parentContext().whenDelete(ref.props.component);
-        ref.props.component.parentId = this.props.parentContext().props.component._id;
-        this.props.parentContext().onUpdateChildIndex(ref.props.component, index)
+    mousemoveonFocus(e, context) {
+        context.onFilter(true);
     }
     render() {
-        return super.render(
-            <LayoutComponent website={this.state.website} page={this.state.page} pages={this.state.pages} component={this.props.component} parentContext={() => this.props.parentContext()}
-                onDropTop={(e, ref) => {
-                    let index = this.props.component.index - 1
-                    this.mountVertically(e, ref, index)
-                }}
-                onDropBottom={(e, ref) => {
-                    let index = this.props.component.index + 1
-                    this.mountVertically(e, ref, index)
-                }}
+        return (
+            <EditableComponent
+                onNew={() => this.onNew()}
+                onDelete={() => this.onDelete()}
+                mousedownonBlurDirect={(e, context) => this.mousedownonBlurDirect(e, context)}
+                mousedownonFocus={(e, context) => this.mousedownonFocus(e, context)}
+                mousemoveonFocus={(e, context) => this.mousemoveonFocus(e, context)}
+                component={this.props.component}
+                context={() => this}
+                tabs={(context) => this.initializeTabs(context)}
             >
-                <TipTap value={this.state.value} onChange={(e) => {
-                    this.save({ value: e.editor.getHTML() })
-                }} />
-            </LayoutComponent>
+
+
+                <LayoutComponent
+                    component={this.props.component}
+                    context={() => this}>
+                    <TipTap value={this.state.value} onChange={(e) => {
+                        this.save({ value: e.editor.getHTML() })
+                    }} />
+                </LayoutComponent>
+            </EditableComponent>
         )
     }
 }

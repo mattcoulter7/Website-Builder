@@ -1,5 +1,10 @@
 import React from "react"
+import ComponentMappings from "./ComponentMapping";
 import ConfigurableComponent from "./ConfigurableComponent";
+import EditableComponent from "./EditableComponent";
+
+import ComponentDAO from "../../../DAOs/ComponentDAO";
+import ComponentDTO from "../../../DTOs/ComponentDTO";
 
 const pointInRect = (pt, rect) => {
     return rect.x <= pt[0] && pt[0] <= rect.x + rect.width &&
@@ -22,7 +27,7 @@ const getHovering = (dragEvent, clientRect, tolerance = 20) => {
     return hovering;
 }
 
-export default class LayoutComponent extends ConfigurableComponent {
+export default class LayoutComponent extends React.Component {
     constructor(props) {
         super(props)
         this.layoutRef = React.createRef();
@@ -54,39 +59,89 @@ export default class LayoutComponent extends ConfigurableComponent {
 
         let hovering = getHovering(e, this.layoutRef.current.getBoundingClientRect())
 
-        let ref = ConfigurableComponent.dragged;
+        let ref = EditableComponent.dragged;
         if (hovering) {
             this[`onDrop${hovering[0]}`](e, ref);
         } else {
             this.onDropBody(e, ref)
         }
     }
-    onDropLeft(e, ref) {
-        this.props.onDropLeft && this.props.onDropLeft(e, ref);
-    }
-    onDropRight(e, ref) {
-        this.props.onDropRight && this.props.onDropRight(e, ref);
-    }
     onDropTop(e, ref) {
-        this.props.onDropTop && this.props.onDropTop(e, ref);
+        if (this.props.onDropTop) {
+            return this.props.onDropTop(e, ref);
+        }
+        let index = this.props.component.index - 1
+        this.mountVertically(e, ref, index)
     }
     onDropBottom(e, ref) {
-        this.props.onDropBottom && this.props.onDropBottom(e, ref);
+        if (this.props.onDropBottom) {
+            return this.props.onDropBottom(e, ref);
+        }
+        let index = this.props.component.index + 1
+        this.mountVertically(e, ref, index)
     }
+    mountVertically(e, ref, index) {
+        ref.props.parentContext().whenDelete(ref.props.component);
+        ref.props.component.parentId = this.props.context().props.parentContext().props.component._id;
+        this.props.context().props.parentContext().onUpdateChildIndex(ref.props.component, index)
+    }
+
+    onDropLeft(e, ref) {
+        if (this.props.onDropLeft) {
+            return this.props.onDropLeft(e, ref);
+        }
+
+        let index = this.props.context().props.parentContext().props.component.index - 1;
+        this.mountHorizontally(e, ref, index);
+    }
+    onDropRight(e, ref) {
+        if (this.props.onDropRight) {
+            return this.props.onDropRight(e, ref);
+        }
+
+        let index = this.props.context().props.parentContext().props.component.index + 1;
+        this.mountHorizontally(e, ref, index);
+    }
+    mountHorizontally(e, ref, index) {
+        // call whenDelete of component parent (removing it)
+        ref.props.parentContext().whenDelete(ref.props.component);
+
+        // add column to row that the element resides within
+        ComponentMappings.Col.create(this.props.context().props.parentContext().props.parentContext().props.component._id, index)
+            .then((col) => {
+                // place the component inside of the column
+                ComponentDAO.update(new ComponentDTO({
+                    ...ref.props.component.toJSON(),
+                    parentId: col._id
+                }))
+                    .then((result) => {
+                        // call whenInsert on row to place the column inside it
+                        this.props.context().props.parentContext().props.parentContext().onUpdateChildIndex(col, index)
+                    })
+            })
+    }
+
     onDropBody(e, ref) {
-        this.props.onDropBody && this.props.onDropBody(e, ref);
+        if (this.props.onDropBody) {
+            return this.props.onDropBody(e, ref);
+        }
     }
-    render(props) {
-        props = props || this.props;
+    mountInternally(e, ref, index) {
+    }
+    componentDidMount() {
+        this.layoutRef.current.style.border = "5px solid transparent"
+        this.layoutRef.current.style.backgroundColor = ""
+    }
+    render() {
         return (
             <div
-                className={props.className}
+                className={this.props.className}
                 ref={this.layoutRef}
                 onDragLeave={(e) => this.onDragLeave(e)}
                 onDragOver={(e) => this.onDragOver(e)}
                 onDrop={(e) => this.onDrop(e)}>
                 {true ? null : this.props.component.type + " (" + this.props.component._id + ")"}
-                {props.children}
+                {this.props.children}
             </div>
         )
     }
