@@ -10,11 +10,12 @@ import LayoutsMenu from "./LayoutsMenu";
 import OptionsMenu from "./OptionsMenu";
 
 import FunctionDoesSomething from '../../../Utils/FunctionDoesSomething'
-import ComponentMapping from "./ComponentMapping";
+import ComponentMapping, { deepCreate, deepDelete } from "./ComponentMapping";
 
 export default class ConfigurableComponent extends React.Component {
     constructor(props, state = {}) {
         super(props);
+        this.componentRef = React.createRef(); // the specific ref for html component
         this.state = {
             children: [],
             tabs: [],
@@ -117,16 +118,8 @@ export default class ConfigurableComponent extends React.Component {
         // update parent state to rerender
         this.props.parentContext().whenDelete(this.props.component)
 
-        //circular delete all children that branch from this component
-        ComponentDAO.select()
-            .then((result) => {
-                const deleteEntirely = (comp) => {
-                    ComponentDAO.delete(comp._id)
-                    result.filter(c => c.parentId == comp._id)
-                        .forEach(deleteEntirely)
-                }
-                deleteEntirely(this.props.component)
-            });
+        // ensure all children components are deletd
+        deepDelete(this.props.component)
     }
 
     static selected;

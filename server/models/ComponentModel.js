@@ -23,6 +23,9 @@ const componentSchema = new mongoose.Schema({
     isTemplate: {
         type: Boolean,
         default: false
+    },
+    thumbnail: {
+        type: String
     }
 })
 

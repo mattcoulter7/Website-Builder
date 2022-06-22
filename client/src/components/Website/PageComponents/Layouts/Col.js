@@ -5,6 +5,7 @@ import ConfigurableComponent from "../ConfigurableComponent";
 
 export default class Col extends ConfigurableComponent {
     render() {
+        if (this.state.children.length == 0) return null;
         return (
             <div className="col">
                 {

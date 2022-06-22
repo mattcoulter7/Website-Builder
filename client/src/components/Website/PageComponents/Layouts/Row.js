@@ -6,6 +6,7 @@ import ConfigurableComponent from "../ConfigurableComponent";
 
 export default class Row_EDIT extends ConfigurableComponent {
     render() {
+        if (this.state.children.length == 0) return null;
         return (
             <div className="row">
                 {

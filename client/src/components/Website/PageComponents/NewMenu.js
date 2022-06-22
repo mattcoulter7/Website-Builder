@@ -6,7 +6,7 @@ import { RiDeleteBin6Fill } from 'react-icons/ri'
 import ComponentDAO from '../../../DAOs/ComponentDAO';
 import ComponentDTO from '../../../DTOs/ComponentDTO';
 
-import ComponentMapping from './ComponentMapping'
+import ComponentMapping, { deepCreate, deepDelete } from './ComponentMapping'
 import IMoveable from './IMoveable';
 
 import { Tabs, Tab, Accordion } from 'react-bootstrap'
@@ -41,30 +41,9 @@ class NewMenu extends React.Component {
     }
 
     createUserDefinedTemplate(userDefinedComponent) {
-        ComponentDAO.select()
-            .then((components) => {
-                const createEntirely = (comp, parentId) => {
-                    // find all children of the parent components
-                    let children = components.filter(c => c.parentId == comp._id)
-
-                    //create a duplicate of the parent
-                    return ComponentDAO.insert(new ComponentDTO({
-                        ...comp.toJSON(),
-                        _id: undefined, // ensure no id so it insert a duplciate
-                        parentId: parentId
-                    }))
-                        .then((dup) => {
-                            // create a duplicate of all the children components and link them to the duplicate parent
-                            children.forEach((child) => {
-                                createEntirely(child, dup._id)
-                            })
-                            return dup;
-                        })
-                }
-                createEntirely(userDefinedComponent, this.props.page._id)
-                    .then(result => {
-                        this.props.context().whenInsert(result)
-                    })
+        deepCreate(userDefinedComponent, this.props.page._id)
+            .then((result) => {
+                this.props.context().whenInsert(result)
             })
     }
 
@@ -83,32 +62,42 @@ class NewMenu extends React.Component {
                     transition={false}
                     className="mb-3 nav-fill">
                     <Tab eventKey="0" title="Section Layouts">
-                        {
-                            TemplateMapping.map((temp) =>
-                                <div class="card" style={{
-                                    width: "18rem"
-                                }}>
-                                    <img src="https://photographytraining.tpub.com/14208/img/14208_31_1.jpg" class="card-img-top" alt="Section Layout" />
-                                    <div class="card-body">
+                        <div style={{
+                            height: "40rem",
+                            overflowY: "scroll"
+                        }}>
+                            {
+                                TemplateMapping.map((temp) =>
+                                    <div class="card">
+                                        <img src="https://photographytraining.tpub.com/14208/img/14208_31_1.jpg" class="card-img-top" alt="Section Layout" />
+                                        <div class="card-body">
 
-                                        <button className="btn btn-primary" onClick={() => this.createDefaultTemplate(temp)}>{temp.name}</button>
+                                            <button className="btn btn-primary" onClick={() => this.createDefaultTemplate(temp)}>{temp.name}</button>
+                                        </div>
                                     </div>
-                                </div>
-                            )
-                        }
+                                )
+                            }
+                        </div>
                     </Tab>
                     <Tab eventKey="1" title="User Defined Layouts">
-                        {this.state.userDefinedComponents.map((comp, i) =>
-                            <div class="card" style={{
-                                width: "18rem"
-                            }}>
-                                <img src="https://photographytraining.tpub.com/14208/img/14208_31_1.jpg" class="card-img-top" alt="Section Layout" />
-                                <div class="card-body">
-
-                                    <button className="btn btn-primary" onClick={() => this.createUserDefinedTemplate(comp)}>User Defined Template {i}</button>
+                        <div style={{
+                            height: "40rem",
+                            overflowY: "scroll"
+                        }}>
+                            {this.state.userDefinedComponents.map((temp, i) =>
+                                <div class="card">
+                                    <div class="card-body">
+                                        {
+                                            (() => {
+                                                const CustomComponent = ComponentMapping[temp.type]
+                                                return (<CustomComponent.preview website={this.props.context().state.website} page={this.props.context().state.page} pages={this.props.context().state.pages} component={temp} />)
+                                            })()
+                                        }
+                                        <button className="btn btn-primary" onClick={() => this.createUserDefinedTemplate(temp)}>User Defined Template {i}</button>
+                                    </div>
                                 </div>
-                            </div>
-                        )}
+                            )}
+                        </div>
                     </Tab>
                 </Tabs>
             </div>

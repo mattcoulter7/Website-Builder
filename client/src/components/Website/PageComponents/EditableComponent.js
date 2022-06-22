@@ -1,15 +1,9 @@
 
 import React from "react"
-import { TelephoneMinus } from "react-bootstrap-icons";
-
-import ComponentDAO from "../../../DAOs/ComponentDAO"
-import ComponentDTO from "../../../DTOs/ComponentDTO"
-
 import IFocusable from "./IFocusable"
 import LayoutsMenu from "./LayoutsMenu";
 import OptionsMenu from "./OptionsMenu";
 
-import FunctionDoesSomething from '../../../Utils/FunctionDoesSomething'
 import ComponentMapping from "./ComponentMapping";
 
 export default class EditableComponent extends React.Component {

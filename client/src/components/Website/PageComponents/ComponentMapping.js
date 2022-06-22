@@ -157,3 +157,51 @@ export default {
         }))
     })
 }
+
+export const deepDelete = (comp) => {
+    return new Promise((success, failure) => {
+        ComponentDAO.select()
+            .then((result) => {
+                const deleteEntirely = (comp) => {
+                    let children = result.filter(c => c.parentId == comp._id)
+                    children.forEach(deleteEntirely)
+                    return ComponentDAO.delete(comp._id)
+                }
+                deleteEntirely(comp)
+                    .then((result) => {
+                        success(result)
+                    })
+            });
+    })
+}
+
+export const deepCreate = (comp, parentId, values = {}) => {
+    return new Promise((success, failure) => {
+        ComponentDAO.select()
+            .then((components) => {
+                const createEntirely = (comp, parentId, values = {}) => {
+                    // find all children of the parent components
+                    let children = components.filter(c => c.parentId == comp._id)
+
+                    //create a duplicate of the parent
+                    return ComponentDAO.insert(new ComponentDTO({
+                        ...comp.toJSON(),
+                        _id: undefined, // ensure no id so it insert a duplciate
+                        parentId: parentId,
+                        ...values
+                    }))
+                        .then((dup) => {
+                            // create a duplicate of all the children components and link them to the duplicate parent
+                            children.forEach((child) => {
+                                createEntirely(child, dup._id)
+                            })
+                            return dup;
+                        })
+                }
+                createEntirely(comp, parentId, values)
+                    .then(result => {
+                        success(result)
+                    })
+            })
+    })
+}

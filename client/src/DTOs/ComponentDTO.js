@@ -7,6 +7,7 @@ export default class ComponentDTO extends DTO {
     #src;
     #index;
     #isTemplate;
+    #thumbnail;
     constructor(obj) {
         super(obj);
         this.#parentId = obj.parentId;
@@ -15,6 +16,7 @@ export default class ComponentDTO extends DTO {
         this.#src = obj.src;
         this.#index = obj.index;
         this.#isTemplate = obj.isTemplate;
+        this.#thumbnail = obj.thumbnail;
     }
     get parentId() {
         return this.#parentId;
@@ -52,6 +54,12 @@ export default class ComponentDTO extends DTO {
     set isTemplate(value) {
         this.#isTemplate = value;
     }
+    get thumbnail() {
+        return this.#thumbnail;
+    }
+    set thumbnail(value) {
+        this.#thumbnail = value;
+    }
     toJSON() { // override this
         return {
             _id: this._id,
@@ -60,7 +68,8 @@ export default class ComponentDTO extends DTO {
             value: this.value,
             src: this.src,
             index: this.index,
-            isTemplate: this.isTemplate
+            isTemplate: this.isTemplate,
+            thumbnail: this.thumbnail
         }
     }
 }

@@ -142,6 +142,10 @@ export default class EditPage extends IFocusable {
                     {
                         (() => {
                             return this.state.showNewMenu ? <NewMenu
+                                style={{
+                                    right: "20%",
+                                    top: "40%"
+                                }}
                                 website={this.state.website}
                                 page={this.state.page}
                                 onClose={() => this.setState({
