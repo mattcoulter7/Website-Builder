@@ -19,7 +19,6 @@ export default class IFrame1 extends ConfigurableComponent {
     }
 
     componentWillUnmount() {
-        super.componentWillUnmount();
         window.removeEventListener("resize", () => this.handleResize());
     }
     render() {

@@ -159,6 +159,16 @@ let componentInits = [
                             })
                     })
             })
+    }),
+
+    (values = {}) => new Promise((success, failure) => {
+        ComponentMapping.Section.create(undefined, values)
+            .then((section) => {
+                ComponentMapping.Navbar1.create(section._id)
+                    .then((navbar1) => {
+                        success(navbar1)
+                    })
+            })
     })
 ]
 

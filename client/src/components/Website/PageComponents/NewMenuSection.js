@@ -13,7 +13,8 @@ class NewMenuSection extends React.Component {
             }}>
                 {this.props.components.map((comp, i) =>
                     <div class="card" onClick={() => this.props.create2(comp)} style={{
-                        cursor:"pointer"
+                        cursor:"pointer",
+                        width:"100%"
                     }}>
                         <div class="card-body">
                             {
