@@ -15,9 +15,7 @@ import FileDAO from "../../../../DAOs/FileDAO";
 
 export default class Section_EDIT extends ConfigurableComponent {
     onSave() {
-        deepCreate(this.props.component, this.props.website._id, {
-            isTemplate: true
-        })
+        deepCreate(this.props.component, undefined, { "presetGroup": "USER" })
     }
     onDuplicate() {
         deepCreate(this.props.component, this.props.page._id)

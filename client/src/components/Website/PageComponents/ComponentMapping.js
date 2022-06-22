@@ -196,6 +196,7 @@ export const deepCreate = (comp, parentId, values = {}) => {
                     return ComponentDAO.insert(new ComponentDTO({
                         ...comp.toJSON(),
                         _id: undefined, // ensure no id so it insert a duplciate
+                        presetGroup: undefined, // if created from a presetGroup it should be cleared for the actual scene object instance
                         parentId: parentId,
                         ...values
                     }))

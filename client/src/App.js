@@ -13,11 +13,11 @@ import ViewWebsites from './pages/ViewWebsites';
 import ViewWebsite from './pages/ViewWebsite';
 import EditWebsite from './pages/EditWebsite';
 
-
-
 import CreatePage from './pages/CreatePage';
 import ViewPage from './pages/ViewPage';
 import EditPage from './pages/EditPage';
+
+import TemplateMapping from './components/Website/PageComponents/TemplateMapping'
 
 function App() {
   return (

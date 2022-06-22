@@ -15,6 +15,13 @@ export default class IFrame1_Edit extends ConfigurableComponent {
         })
         this.iframeRef = React.createRef(this);
     }
+    initializeTabs(context) {
+        context("Content", () => <input className="form-control" onChange={(e) => {
+            this.save({
+                src: e.target.value
+            })
+        }} value={this.state.src} />)
+    }
     handleResize() {
         this.iframeRef.current.height = this.iframeRef.current.clientWidth * 9 / 16;
     }
@@ -25,7 +32,6 @@ export default class IFrame1_Edit extends ConfigurableComponent {
     }
 
     componentWillUnmount() {
-        super.componentWillUnmount();
         window.removeEventListener("resize", () => this.handleResize());
     }
     render() {
@@ -33,7 +39,7 @@ export default class IFrame1_Edit extends ConfigurableComponent {
             <EditableComponent
                 onDelete={() => this.onDelete()}
                 component={this.props.component}
-                
+                tabs={(context) => this.initializeTabs(context)}
                 context={() => this}>
                 <LayoutComponent
                     component={this.props.component}

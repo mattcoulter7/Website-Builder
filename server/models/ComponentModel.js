@@ -3,8 +3,7 @@ const ObjectId = require('mongoose/lib/types/objectid');
 
 const componentSchema = new mongoose.Schema({
     parentId: { // can be a page or another element...
-        type: ObjectId,
-        required: true
+        type: ObjectId
     },
     type: {
         type: String,
@@ -20,12 +19,9 @@ const componentSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    isTemplate: {
-        type: Boolean,
-        default: false
-    },
-    thumbnail: {
-        type: String
+    presetGroup: {
+        type: String,
+        default: ""
     }
 })
 

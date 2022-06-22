@@ -29,7 +29,6 @@ export default class Navbar1 extends ConfigurableComponent {
                     </Container>
                 </Navbar>
             </EditableComponent>
-
         );
     }
 }

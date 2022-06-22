@@ -24,35 +24,149 @@ import NullComponent from "./NullComponent"
 
 import ComponentMapping from "./ComponentMapping"
 
-class Template {
-    constructor(name, create) {
-        this.name = name;
-        this.create = create;
-    }
-}
+let componentInits = [
 
-export default [
-    new Template("Text", (parentId) => {
-        return new Promise((success, failure) => {
-            ComponentMapping.Section.create(parentId)
-                .then((section) => {
-                    ComponentMapping.Container.create(section._id)
-                        .then((container) => {
-                            ComponentMapping.Row.create(container._id)
-                                .then((row) => {
-                                    ComponentMapping.Col.create(row._id)
-                                        .then((col) => {
-                                            ComponentMapping.Text1.create(col._id)
-                                                .then((text1) => {
-                                                    success(section)
-                                                })
-                                        })
-                                })
-                        })
-                })
-        })
-    },
-        <section>
-            
-        </section>)
+    (values = {}) => new Promise((success, failure) => {
+        ComponentMapping.Section.create(undefined, values)
+            .then((section) => {
+                ComponentMapping.Container.create(section._id)
+                    .then((container) => {
+                        ComponentMapping.Row.create(container._id)
+                            .then((row) => {
+                                ComponentMapping.Col.create(row._id)
+                                    .then((col) => {
+                                        ComponentMapping.Text1.create(col._id)
+                                            .then((text1) => {
+                                                success(section)
+                                            })
+                                    })
+                            })
+                    })
+            })
+    }),
+
+    (values = {}) => new Promise((success, failure) => {
+        ComponentMapping.Section.create(undefined, values)
+            .then((section) => {
+                ComponentMapping.Container.create(section._id)
+                    .then((container) => {
+                        ComponentMapping.Row.create(container._id)
+                            .then((row) => {
+                                ComponentMapping.Col.create(row._id)
+                                    .then((col) => {
+                                        ComponentMapping.Text1.create(col._id)
+                                            .then((text1) => {
+                                            })
+                                    })
+                                ComponentMapping.Col.create(row._id)
+                                    .then((col) => {
+                                        ComponentMapping.Photo1.create(col._id)
+                                            .then((text1) => {
+                                                success(section)
+                                            })
+                                    })
+                            })
+                    })
+            })
+    }),
+
+    (values = {}) => new Promise((success, failure) => {
+        ComponentMapping.Section.create(undefined, values)
+            .then((section) => {
+                ComponentMapping.Container.create(section._id)
+                    .then((container) => {
+                        ComponentMapping.Row.create(container._id)
+                            .then((row) => {
+                                ComponentMapping.Col.create(row._id)
+                                    .then((col) => {
+                                        ComponentMapping.Photo1.create(col._id)
+                                            .then((text1) => {
+                                                success(section)
+                                            })
+                                    })
+                                ComponentMapping.Col.create(row._id)
+                                    .then((col) => {
+                                        ComponentMapping.Text1.create(col._id)
+                                            .then((text1) => {
+                                            })
+                                    })
+                            })
+                    })
+            })
+    }),
+
+    (values = {}) => new Promise((success, failure) => {
+        ComponentMapping.Section.create(undefined, values)
+            .then((section) => {
+                ComponentMapping.Container.create(section._id)
+                    .then((container) => {
+                        ComponentMapping.Row.create(container._id)
+                            .then((row) => {
+                                ComponentMapping.Col.create(row._id)
+                                    .then((col) => {
+                                        ComponentMapping.Photo1.create(col._id)
+                                            .then((text1) => {
+                                                success(section)
+                                            })
+                                    })
+                                ComponentMapping.Col.create(row._id)
+                                    .then((col) => {
+                                        ComponentMapping.Photo1.create(col._id)
+                                            .then((text1) => {
+                                                success(section)
+                                            })
+                                    })
+                                ComponentMapping.Col.create(row._id)
+                                    .then((col) => {
+                                        ComponentMapping.Photo1.create(col._id)
+                                            .then((text1) => {
+                                                success(section)
+                                            })
+                                    })
+                            })
+                    })
+            })
+    }),
+
+    (values = {}) => new Promise((success, failure) => {
+        ComponentMapping.Section.create(undefined, values)
+            .then((section) => {
+                ComponentMapping.Container.create(section._id)
+                    .then((container) => {
+                        ComponentMapping.Row.create(container._id)
+                            .then((row) => {
+                                ComponentMapping.Col.create(row._id)
+                                    .then((col) => {
+                                        ComponentMapping.Text1.create(col._id)
+                                            .then((text1) => {
+                                                success(section)
+                                            })
+                                    })
+                                ComponentMapping.Col.create(row._id)
+                                    .then((col) => {
+                                        ComponentMapping.Text1.create(col._id)
+                                            .then((text1) => {
+                                                success(section)
+                                            })
+                                    })
+                                ComponentMapping.Col.create(row._id)
+                                    .then((col) => {
+                                        ComponentMapping.Text1.create(col._id)
+                                            .then((text1) => {
+                                                success(section)
+                                            })
+                                    })
+                            })
+                    })
+            })
+    })
 ]
+
+/*
+Promise.all(Window.componentInits.map(ci => ci({
+    presetGroup: "DEFAULT"
+}))).then(result => console.log("DONE!"))
+*/
+Window.componentInits = componentInits;
+
+export default componentInits;
