@@ -20,6 +20,9 @@ import Section from "../components/Website/PageComponents/Layouts/Section"
 import { params } from "../Utils/QueryString"
 
 import Panel from '../components/Website/EditWebsite/Panel';
+import EditableComponent from '../components/Website/PageComponents/EditableComponent';
+
+import NewMenu from "../components/Website/PageComponents/NewMenu"
 
 
 export default class EditPage extends IFocusable {
@@ -32,7 +35,7 @@ export default class EditPage extends IFocusable {
             pages: []
         }
         this._id = null;
-        
+
         document.addEventListener("keydown", (e) => {
             if (e.key == "Escape") {
                 this.onDeselect();
@@ -95,28 +98,18 @@ export default class EditPage extends IFocusable {
     }
 
     onDeselect() {
-        Section.active && Section.active.setState({
+        EditableComponent.active && EditableComponent.active.setState({
             focus: false
+        })
+        this.setState({
+            showNewMenu: false
         })
     }
 
     onNew() {
-        ComponentMapping.Section.create(this._id)
-            .then((section) => {
-                ComponentMapping.Container.create(section._id)
-                    .then((container) => {
-                        ComponentMapping.Row.create(container._id)
-                            .then((row) => {
-                                ComponentMapping.Col.create(row._id)
-                                    .then((col) => {
-                                        ComponentMapping.Text1.create(col._id)
-                                            .then((text1) => {
-                                                this.whenInsert(section);
-                                            })
-                                    })
-                            })
-                    })
-            })
+        this.setState({
+            showNewMenu: true
+        })
     }
 
     mousedownonBlur(e) {
@@ -146,6 +139,19 @@ export default class EditPage extends IFocusable {
                             })
                     }
                     <NewLine onNew={() => this.onNew()}></NewLine>
+                    {
+                        (() => {
+                            return this.state.showNewMenu ? <NewMenu
+                                website={this.state.website}
+                                page={this.state.page}
+                                onClose={() => this.setState({
+                                    showNewMenu: false
+                                })}
+                                context={() => this}
+                            /> : null
+                        })()
+
+                    }
                 </Page >
             </IFocusable>
         );

@@ -31,7 +31,7 @@ class ComponentMap {
     }
 }
 
-const componentMappings = {
+export default {
     'Text1': new ComponentMap(Text1, Text1_EDIT, (parentId) => {
         return ComponentDAO.insert(new ComponentDTO({
             parentId: parentId,
@@ -157,5 +157,3 @@ const componentMappings = {
         }))
     })
 }
-
-export default componentMappings;

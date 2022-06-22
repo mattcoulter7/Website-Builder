@@ -3,8 +3,8 @@ import DAO from "./DAO";
 import ComponentDTO from "../DTOs/ComponentDTO"
 
 
-const componentDAO = new DAO('component',ComponentDTO);
+const ComponentDAO = new DAO('component',ComponentDTO);
 
-Window.componentDAO = componentDAO;
+Window.ComponentDAO = ComponentDAO;
 
-export default componentDAO;
+export default ComponentDAO;

@@ -18,13 +18,13 @@ class LayoutsMenu extends React.Component {
     }
     render() {
         return (
-            <div ref={this.wrapperRef} class="card shadow-sm bg-white rounded" style={{
+            <div ref={this.wrapperRef} className="card shadow-sm bg-white rounded" style={{
                 ...this.props.style || {},
                 width: "40rem",
                 position: "fixed",
                 zIndex: 10000
             }}>
-                <button type="button" class="btn-close" aria-label="Close" onClick={this.props.onClose}></button>
+                <button type="button" className="btn-close" aria-label="Close" onClick={this.props.onClose}></button>
                 <IMoveable dragElement={this.wrapperRef} />
                 <Tabs
                     defaultActiveKey="0"

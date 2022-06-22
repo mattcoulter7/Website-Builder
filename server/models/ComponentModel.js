@@ -19,6 +19,10 @@ const componentSchema = new mongoose.Schema({
     index: {
         type: Number,
         default: 0
+    },
+    isTemplate: {
+        type: Boolean,
+        default: false
     }
 })
 

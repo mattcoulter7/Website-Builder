@@ -71,6 +71,22 @@ export default class EditableComponent extends React.Component {
             showMajorMenu: on ? this.state.showMajorMenu : false
         })
     }
+    onUp(on) {
+
+    }
+    onDown(on) {
+
+    }
+    onSave() {
+        if (this.props.onSave) {
+            return this.props.onSave();
+        }
+    }
+    onDuplicate() {
+        if (this.props.onDuplicate) {
+            return this.props.onDuplicate();
+        }
+    }
     //#region IFocusable
     mousemoveonFocusDirect(e) {
         if (this.props.mousemoveonFocusDirect) {
@@ -177,8 +193,10 @@ export default class EditableComponent extends React.Component {
                                         })
                                     }
                                     onAdd={() => this.onNew()}
-                                    onUp={() => { }}
-                                    onDown={() => { }} /> : null
+                                    onUp={() => this.onUp()}
+                                    onDown={() => this.onDown()}
+                                    onSave={() => this.onSave()}
+                                    onDuplicate={() => this.onDuplicate()} /> : null
                         })()
                     }
                     {this.props.children}

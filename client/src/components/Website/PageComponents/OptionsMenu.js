@@ -2,14 +2,17 @@ import React from 'react'
 
 import { FaArrowUp, FaArrowDown } from 'react-icons/fa'
 import { RiDeleteBin6Fill } from 'react-icons/ri'
-import { AiFillPlusCircle, AiFillEdit } from 'react-icons/ai'
+import { AiFillPlusCircle, AiFillEdit,AiFillSave } from 'react-icons/ai'
+import {HiOutlineDuplicate} from "react-icons/hi"
 
 const OptionsMenu = ({
     onDelete,
     onUp,
     onDown,
     onAdd,
-    onEdit
+    onEdit,
+    onSave,
+    onDuplicate
 }) => {
     var buttons = [];
     onDelete && buttons.push(
@@ -50,6 +53,22 @@ const OptionsMenu = ({
             onClick={onEdit}
         >
             <AiFillEdit />
+        </button>
+    );
+    onSave && buttons.push(
+        <button
+            className="btn btn-primary btn-sm m-1"
+            onClick={onSave}
+        >
+            <AiFillSave />
+        </button>
+    );
+    onDuplicate && buttons.push(
+        <button
+            className="btn btn-primary btn-sm m-1"
+            onClick={onDuplicate}
+        >
+            <HiOutlineDuplicate />
         </button>
     );
 
