@@ -32,8 +32,9 @@ class ComponentMap {
 }
 
 export default {
-    'Text1': new ComponentMap(Text1, Text1_EDIT, (parentId) => {
+    'Text1': new ComponentMap(Text1, Text1_EDIT, (parentId, values = {}) => {
         return ComponentDAO.insert(new ComponentDTO({
+            ...values,
             parentId: parentId,
             type: "Text1",
             value: "<h1>Example Text</h1>"
@@ -45,8 +46,9 @@ export default {
             type: "Text1"
         }))
     }),
-    'Navbar1': new ComponentMap(Navbar1, Navbar1_EDIT, (parentId) => {
+    'Navbar1': new ComponentMap(Navbar1, Navbar1_EDIT, (parentId, values = {}) => {
         return ComponentDAO.insert(new ComponentDTO({
+            ...values,
             parentId: parentId,
             type: "Navbar1"
         }))
@@ -56,8 +58,9 @@ export default {
             type: "Navbar1"
         }))
     }),
-    'Photo1': new ComponentMap(Photo1, Photo1_EDIT, (parentId) => {
+    'Photo1': new ComponentMap(Photo1, Photo1_EDIT, (parentId, values = {}) => {
         return ComponentDAO.insert(new ComponentDTO({
+            ...values,
             parentId: parentId,
             type: "Photo1",
             src: "https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg"
@@ -69,8 +72,9 @@ export default {
             type: "Photo1"
         }))
     }),
-    'CarouselItem1': new ComponentMap(NullComponent, NullComponent, (parentId) => {
+    'CarouselItem1': new ComponentMap(NullComponent, NullComponent, (parentId, values = {}) => {
         return ComponentDAO.insert(new ComponentDTO({
+            ...values,
             parentId: parentId,
             type: "CarouselItem1",
             src: "https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg",
@@ -84,8 +88,9 @@ export default {
             type: "CarouselItem1"
         }))
     }),
-    'Carousel1': new ComponentMap(Carousel1, Carousel1_EDIT, (parentId) => {
+    'Carousel1': new ComponentMap(Carousel1, Carousel1_EDIT, (parentId, values = {}) => {
         return ComponentDAO.insert(new ComponentDTO({
+            ...values,
             parentId: parentId,
             type: "Carousel1"
         }))
@@ -95,12 +100,12 @@ export default {
             type: "Carousel1"
         }))
     }),
-    'Col': new ComponentMap(Col, Col_EDIT, (parentId, index) => {
+    'Col': new ComponentMap(Col, Col_EDIT, (parentId, values = {}) => {
         return ComponentDAO
             .insert(new ComponentDTO({
+                ...values,
                 parentId: parentId,
-                type: "Col",
-                index: index
+                type: "Col"
             }))
     }, (comp) => {
         return ComponentDAO.update(new ComponentDTO({
@@ -108,9 +113,10 @@ export default {
             type: "Col"
         }))
     }),
-    'Row': new ComponentMap(Row, Row_EDIT, (parentId) => {
+    'Row': new ComponentMap(Row, Row_EDIT, (parentId, values = {}) => {
         return ComponentDAO
             .insert(new ComponentDTO({
+                ...values,
                 parentId: parentId,
                 type: "Row"
             }))
@@ -120,9 +126,10 @@ export default {
             type: "Row"
         }))
     }),
-    'Section': new ComponentMap(Section, Section_EDIT, (parentId) => {
+    'Section': new ComponentMap(Section, Section_EDIT, (parentId, values = {}) => {
         return ComponentDAO
             .insert(new ComponentDTO({
+                ...values,
                 parentId: parentId,
                 type: "Section"
             }))
@@ -132,9 +139,10 @@ export default {
             type: "Section"
         }))
     }),
-    'Container': new ComponentMap(Container, Container_EDIT, (parentId) => {
+    'Container': new ComponentMap(Container, Container_EDIT, (parentId, values = {}) => {
         return ComponentDAO
             .insert(new ComponentDTO({
+                ...values,
                 parentId: parentId,
                 type: "Container"
             }))
@@ -144,9 +152,10 @@ export default {
             type: "Container"
         }))
     }),
-    'IFrame1': new ComponentMap(IFrame1, IFrame1_EDIT, (parentId) => {
+    'IFrame1': new ComponentMap(IFrame1, IFrame1_EDIT, (parentId, values = {}) => {
         return ComponentDAO
             .insert(new ComponentDTO({
+                ...values,
                 parentId: parentId,
                 type: "IFrame1"
             }))

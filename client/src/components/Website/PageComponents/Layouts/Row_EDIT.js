@@ -55,7 +55,9 @@ export default class Row_EDIT extends ConfigurableComponent {
         ref.props.parentContext().whenDelete(ref.props.component);
 
         // add a column to the row
-        ComponentMapping.Col.create(this.props.component._id, index)
+        ComponentMapping.Col.create(this.props.component._id, {
+            index: index
+        })
             .then((col) => {
                 // place the component inside of the column
                 ComponentDAO.update(new ComponentDTO({
