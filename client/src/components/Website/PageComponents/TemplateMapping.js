@@ -27,6 +27,7 @@ import ComponentMapping from "./ComponentMapping"
 let componentInits = [
 
     (values = {}) => new Promise((success, failure) => {
+        debugger
         ComponentMapping.Section.create(undefined, values)
             .then((section) => {
                 ComponentMapping.Container.create(section._id)
