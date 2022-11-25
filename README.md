@@ -3,9 +3,9 @@ A dynamic tool for creating websites without writing a single lines of code!
 Created in React and NodeJS, using MySQL Server for the database.
 
 ## Videos
-https://youtu.be/oJNwd2z1914
-https://youtu.be/y0x20GbhWbE
-https://youtu.be/JHndgezyELg
+- https://youtu.be/oJNwd2z1914
+- https://youtu.be/y0x20GbhWbE
+- https://youtu.be/JHndgezyELg
 
 ## Dependencies
 - NPM package manager
